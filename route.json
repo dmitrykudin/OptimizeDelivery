@@ -1,0 +1,217 @@
+{
+  "Legs": [
+    {
+      "Distance": 37495,
+      "Duration": "00:30:40",
+      "DurationInTraffic": null,
+      "StartLocation": {
+        "Latitude": 59.796031500000012,
+        "Longitude": 30.402159999999991
+      },
+      "EndLocation": { "Latitude": 60.0359332, "Longitude": 30.45492509999999 },
+      "StartAddress": "Паровозная дор., Ленинградская обл., Россия, 196626",
+      "EndAddress": "Муринская дор., 63, Санкт-Петербург, Россия, 188662",
+      "ArrivalTime": null,
+      "DepartureTime": null
+    },
+    {
+      "Distance": 5425,
+      "Duration": "00:12:48",
+      "DurationInTraffic": null,
+      "StartLocation": {
+        "Latitude": 60.0359332,
+        "Longitude": 30.45492509999999
+      },
+      "EndLocation": { "Latitude": 60.0146641, "Longitude": 30.4378721 },
+      "StartAddress": "Муринская дор., 63, Санкт-Петербург, Россия, 188662",
+      "EndAddress": "ул. Руставели, 37к.1, Санкт-Петербург, Россия, 195273",
+      "ArrivalTime": null,
+      "DepartureTime": null
+    },
+    {
+      "Distance": 10469,
+      "Duration": "00:16:16",
+      "DurationInTraffic": null,
+      "StartLocation": { "Latitude": 60.0146641, "Longitude": 30.4378721 },
+      "EndLocation": {
+        "Latitude": 59.980569200000012,
+        "Longitude": 30.5021304
+      },
+      "StartAddress": "ул. Руставели, 37к.1, Санкт-Петербург, Россия, 195273",
+      "EndAddress": "Челябинская ул., 24, Санкт-Петербург, Россия, 195043",
+      "ArrivalTime": null,
+      "DepartureTime": null
+    },
+    {
+      "Distance": 3715,
+      "Duration": "00:08:31",
+      "DurationInTraffic": null,
+      "StartLocation": {
+        "Latitude": 59.980569200000012,
+        "Longitude": 30.5021304
+      },
+      "EndLocation": {
+        "Latitude": 59.959649299999988,
+        "Longitude": 30.5018026
+      },
+      "StartAddress": "Челябинская ул., 24, Санкт-Петербург, Россия, 195043",
+      "EndAddress": "Unnamed Road, Санкт-Петербург, Россия",
+      "ArrivalTime": null,
+      "DepartureTime": null
+    },
+    {
+      "Distance": 1352,
+      "Duration": "00:07:08",
+      "DurationInTraffic": null,
+      "StartLocation": {
+        "Latitude": 59.959649299999988,
+        "Longitude": 30.5018026
+      },
+      "EndLocation": { "Latitude": 59.95357769999999, "Longitude": 30.497405 },
+      "StartAddress": "Unnamed Road, Санкт-Петербург, Россия",
+      "EndAddress": "ул. Коммуны, 23, Санкт-Петербург, Россия, 195030",
+      "ArrivalTime": null,
+      "DepartureTime": null
+    },
+    {
+      "Distance": 2105,
+      "Duration": "00:05:52",
+      "DurationInTraffic": null,
+      "StartLocation": {
+        "Latitude": 59.95357769999999,
+        "Longitude": 30.497405
+      },
+      "EndLocation": {
+        "Latitude": 59.958044699999988,
+        "Longitude": 30.4725243
+      },
+      "StartAddress": "ул. Коммуны, 23, Санкт-Петербург, Россия, 195030",
+      "EndAddress": "Индустриальный пр., 43К, Санкт-Петербург, Ленинградская, Россия, 195279",
+      "ArrivalTime": null,
+      "DepartureTime": null
+    },
+    {
+      "Distance": 4366,
+      "Duration": "00:07:31",
+      "DurationInTraffic": null,
+      "StartLocation": {
+        "Latitude": 59.958044699999988,
+        "Longitude": 30.4725243
+      },
+      "EndLocation": { "Latitude": 59.9807181, "Longitude": 30.4534706 },
+      "StartAddress": "Индустриальный пр., 43К, Санкт-Петербург, Ленинградская, Россия, 195279",
+      "EndAddress": "195279, Зотовский пр., 9, Санкт-Петербург, Россия, 195279",
+      "ArrivalTime": null,
+      "DepartureTime": null
+    },
+    {
+      "Distance": 5701,
+      "Duration": "00:08:54",
+      "DurationInTraffic": null,
+      "StartLocation": { "Latitude": 59.9807181, "Longitude": 30.4534706 },
+      "EndLocation": {
+        "Latitude": 59.989436700000013,
+        "Longitude": 30.4200119
+      },
+      "StartAddress": "195279, Зотовский пр., 9, Санкт-Петербург, Россия, 195279",
+      "EndAddress": "пр. Непокорённых, 63 корпус 44, Санкт-Петербург, Россия, 195067",
+      "ArrivalTime": null,
+      "DepartureTime": null
+    },
+    {
+      "Distance": 4376,
+      "Duration": "00:10:23",
+      "DurationInTraffic": null,
+      "StartLocation": {
+        "Latitude": 59.989436700000013,
+        "Longitude": 30.4200119
+      },
+      "EndLocation": { "Latitude": 59.973274999999987, "Longitude": 30.430224 },
+      "StartAddress": "пр. Непокорённых, 63 корпус 44, Санкт-Петербург, Россия, 195067",
+      "EndAddress": "пр. Маршала Блюхера, 65, Санкт-Петербург, Россия, 195253",
+      "ArrivalTime": null,
+      "DepartureTime": null
+    },
+    {
+      "Distance": 7657,
+      "Duration": "00:17:26",
+      "DurationInTraffic": null,
+      "StartLocation": {
+        "Latitude": 59.973274999999987,
+        "Longitude": 30.430224
+      },
+      "EndLocation": { "Latitude": 59.934117600000008, "Longitude": 30.486915 },
+      "StartAddress": "пр. Маршала Блюхера, 65, Санкт-Петербург, Россия, 195253",
+      "EndAddress": "пр. Наставников, 2, Санкт-Петербург, Россия, 195426",
+      "ArrivalTime": null,
+      "DepartureTime": null
+    },
+    {
+      "Distance": 2083,
+      "Duration": "00:05:20",
+      "DurationInTraffic": null,
+      "StartLocation": {
+        "Latitude": 59.934117600000008,
+        "Longitude": 30.486915
+      },
+      "EndLocation": { "Latitude": 59.9215118, "Longitude": 30.4920764 },
+      "StartAddress": "пр. Наставников, 2, Санкт-Петербург, Россия, 195426",
+      "EndAddress": "Торговый центр, Санкт-Петербург, Россия, 193312",
+      "ArrivalTime": null,
+      "DepartureTime": null
+    },
+    {
+      "Distance": 1483,
+      "Duration": "00:03:52",
+      "DurationInTraffic": null,
+      "StartLocation": { "Latitude": 59.9215118, "Longitude": 30.4920764 },
+      "EndLocation": { "Latitude": 59.9241073, "Longitude": 30.503945 },
+      "StartAddress": "Торговый центр, Санкт-Петербург, Россия, 193312",
+      "EndAddress": "ул. Коллонтай, 47 корпус 6, Санкт-Петербург, Россия, 193312",
+      "ArrivalTime": null,
+      "DepartureTime": null
+    },
+    {
+      "Distance": 2086,
+      "Duration": "00:05:39",
+      "DurationInTraffic": null,
+      "StartLocation": { "Latitude": 59.9241073, "Longitude": 30.503945 },
+      "EndLocation": { "Latitude": 59.9130429, "Longitude": 30.480518 },
+      "StartAddress": "ул. Коллонтай, 47 корпус 6, Санкт-Петербург, Россия, 193312",
+      "EndAddress": "пр. Большевиков, 10А, Санкт-Петербург, Россия, 193231",
+      "ArrivalTime": null,
+      "DepartureTime": null
+    },
+    {
+      "Distance": 2544,
+      "Duration": "00:07:22",
+      "DurationInTraffic": null,
+      "StartLocation": { "Latitude": 59.9130429, "Longitude": 30.480518 },
+      "EndLocation": {
+        "Latitude": 59.918530299999993,
+        "Longitude": 30.466450899999991
+      },
+      "StartAddress": "пр. Большевиков, 10А, Санкт-Петербург, Россия, 193231",
+      "EndAddress": "ул. Коллонтай, 21, к.1, Санкт-Петербург, Россия, 193231",
+      "ArrivalTime": null,
+      "DepartureTime": null
+    },
+    {
+      "Distance": 24349,
+      "Duration": "00:28:55",
+      "DurationInTraffic": null,
+      "StartLocation": {
+        "Latitude": 59.918530299999993,
+        "Longitude": 30.466450899999991
+      },
+      "EndLocation": {
+        "Latitude": 59.796031500000012,
+        "Longitude": 30.402159999999991
+      },
+      "StartAddress": "ул. Коллонтай, 21, к.1, Санкт-Петербург, Россия, 193231",
+      "EndAddress": "Паровозная дор., Ленинградская обл., Россия, 196626",
+      "ArrivalTime": null,
+      "DepartureTime": null
+    }
+  ]
+}
