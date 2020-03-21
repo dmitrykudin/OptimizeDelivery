@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OptimizeDelivery.TelegramBo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OptimizeDelivery.TelegramBotSandbox", "OptimizeDelivery.TelegramBotSandbox\OptimizeDelivery.TelegramBotSandbox.csproj", "{C6BA28C6-C872-47AC-8723-6365F24F3BA8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OptimizeDelivery.ItineroSandbox", "OptimizeDelivery.ItineroSandbox\OptimizeDelivery.ItineroSandbox.csproj", "{456E8E9C-686B-4902-B9E8-9C5C676C56BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{C6BA28C6-C872-47AC-8723-6365F24F3BA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6BA28C6-C872-47AC-8723-6365F24F3BA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6BA28C6-C872-47AC-8723-6365F24F3BA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{456E8E9C-686B-4902-B9E8-9C5C676C56BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{456E8E9C-686B-4902-B9E8-9C5C676C56BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{456E8E9C-686B-4902-B9E8-9C5C676C56BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{456E8E9C-686B-4902-B9E8-9C5C676C56BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

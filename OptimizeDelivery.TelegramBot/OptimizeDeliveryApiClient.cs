@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace OptimizeDelivery.TelegramBot
     {
         private static HttpClient ApiClient { get; set; }
 
-        private static string OptimizeDeliveryApiBaseUrl => "http://localhost:63260/optimizeDelivery/";
+        private static string OptimizeDeliveryApiBaseUrl => ConfigurationManager.AppSettings["OptimizeDeliveryAPIUrl"];
 
         private static string DefaultMediaType = "application/json"; 
 
@@ -19,7 +20,7 @@ namespace OptimizeDelivery.TelegramBot
         {
             ApiClient = new HttpClient()
             {
-                BaseAddress = new Uri(OptimizeDeliveryApiBaseUrl),
+                BaseAddress = new Uri(OptimizeDeliveryApiBaseUrl)
             };
         }
 
