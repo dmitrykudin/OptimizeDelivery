@@ -4,8 +4,9 @@ using System.Linq;
 using Common;
 using Common.DbModels;
 using Common.Models.ApiModels;
+using OptimizeDelivery.DataAccessLayer;
 
-namespace OptimizeDelivery.DataAccessLayer.Services
+namespace OptimizeDelivery.Services.Services
 {
     public class CourierService
     {
@@ -18,13 +19,11 @@ namespace OptimizeDelivery.DataAccessLayer.Services
                     .FirstOrDefault(x => x.TelegramId == request.TelegramId);
 
                 if (dbCourier != null)
-                {
                     return new CreateCourierResult
                     {
                         Id = dbCourier.Id,
-                        Status = "Existing",
+                        Status = "Existing"
                     };
-                }
 
                 var newCourier = context
                     .Set<DbCourier>()
@@ -32,7 +31,7 @@ namespace OptimizeDelivery.DataAccessLayer.Services
                     {
                         TelegramId = request.TelegramId,
                         Name = request.FirstName,
-                        Surname = request.LastName,
+                        Surname = request.LastName
                     });
 
                 context.SaveChanges();
@@ -40,7 +39,7 @@ namespace OptimizeDelivery.DataAccessLayer.Services
                 return new CreateCourierResult
                 {
                     Id = newCourier.Id,
-                    Status = "Created",
+                    Status = "Created"
                 };
             }
         }
@@ -50,21 +49,17 @@ namespace OptimizeDelivery.DataAccessLayer.Services
             var courierFromDb = GetCourierByTelegramId(request.TelegramId);
 
             if (courierFromDb == null)
-            {
                 return new GetRouteResult
                 {
                     Status = "Unauthorized"
                 };
-            }
 
             var routeFromDb = TryAssignRouteForCourier(courierFromDb.Id);
             if (routeFromDb == null)
-            {
                 return new GetRouteResult
                 {
                     Status = "NoRoutes"
                 };
-            }
 
             return routeFromDb.ToRouteResult();
         }
@@ -89,10 +84,7 @@ namespace OptimizeDelivery.DataAccessLayer.Services
                     .Include(x => x.Parcels)
                     .FirstOrDefault(x => !x.CourierId.HasValue && DbFunctions.TruncateTime(x.CreationDate) == today);
 
-                if (routeForToday == null)
-                {
-                    return null;
-                }
+                if (routeForToday == null) return null;
 
                 routeForToday.CourierId = courierId;
 

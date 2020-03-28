@@ -64,13 +64,17 @@
       <Project>{8e00583c-c6cc-4809-af25-c8c152d6030b}</Project>
       <Name>OptimizeDelivery.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\OptimizeDelivery.DataOperationLayer\OptimizeDelivery.DataOperationLayer.csproj">
-      <Project>{8f9b3707-2c4c-4fad-bc1b-7883497a815a}</Project>
-      <Name>OptimizeDelivery.DataOperationLayer</Name>
-    </ProjectReference>
     <ProjectReference Include="..\OptimizeDelivery.MapsAPIIntegration\OptimizeDelivery.MapsAPIIntegration.csproj">
       <Project>{020cd0aa-a70d-4c20-a89e-e7ae06911bdb}</Project>
       <Name>OptimizeDelivery.MapsAPIIntegration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OptimizeDelivery.Repositories\OptimizeDelivery.Repositories.csproj">
+      <Project>{8f9b3707-2c4c-4fad-bc1b-7883497a815a}</Project>
+      <Name>OptimizeDelivery.Repositories</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OptimizeDelivery.Services\OptimizeDelivery.Services.csproj">
+      <Project>{9d37b34f-0c1c-4161-8860-c81b96889085}</Project>
+      <Name>OptimizeDelivery.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

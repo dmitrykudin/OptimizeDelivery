@@ -10,19 +10,19 @@ namespace OptimizeDelivery.TelegramBot
 {
     public class OptimizeDeliveryApiClient
     {
-        private static HttpClient ApiClient { get; set; }
-
-        private static string OptimizeDeliveryApiBaseUrl => ConfigurationManager.AppSettings["OptimizeDeliveryAPIUrl"];
-
-        private static string DefaultMediaType = "application/json"; 
+        private static readonly string DefaultMediaType = "application/json";
 
         public OptimizeDeliveryApiClient()
         {
-            ApiClient = new HttpClient()
+            ApiClient = new HttpClient
             {
                 BaseAddress = new Uri(OptimizeDeliveryApiBaseUrl)
             };
         }
+
+        private static HttpClient ApiClient { get; set; }
+
+        private static string OptimizeDeliveryApiBaseUrl => ConfigurationManager.AppSettings["OptimizeDeliveryAPIUrl"];
 
         public async Task<CreateCourierResult> CreateCourier(int telegramId, string firstName, string lastName)
         {
@@ -31,7 +31,7 @@ namespace OptimizeDelivery.TelegramBot
                 {
                     TelegramId = telegramId,
                     FirstName = firstName,
-                    LastName = lastName,
+                    LastName = lastName
                 }), Encoding.UTF8, DefaultMediaType));
             var resultContent = await result.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<CreateCourierResult>(resultContent);
@@ -42,7 +42,7 @@ namespace OptimizeDelivery.TelegramBot
             var result = await ApiClient.PostAsync("courier/route",
                 new StringContent(JsonConvert.SerializeObject(new GetRouteRequest
                 {
-                    TelegramId = telegramId,
+                    TelegramId = telegramId
                 }), Encoding.UTF8, DefaultMediaType));
             var resultContent = await result.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<GetRouteResult>(resultContent);

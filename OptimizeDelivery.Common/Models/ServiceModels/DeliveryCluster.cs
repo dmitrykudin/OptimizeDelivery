@@ -1,4 +1,4 @@
-﻿using Common.Models.DbMappedModels;
+﻿using Common.Models.BusinessModels;
 
 namespace Common.Models.ServiceModels
 {

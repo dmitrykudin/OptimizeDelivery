@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OptimizeDelivery.MapsAPIIntegration", "OptimizeDelivery.MapsAPIIntegration\OptimizeDelivery.MapsAPIIntegration.csproj", "{020CD0AA-A70D-4C20-A89E-E7AE06911BDB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OptimizeDelivery.DataOperationLayer", "OptimizeDelivery.DataOperationLayer\OptimizeDelivery.DataOperationLayer.csproj", "{8F9B3707-2C4C-4FAD-BC1B-7883497A815A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OptimizeDelivery.Repositories", "OptimizeDelivery.Repositories\OptimizeDelivery.Repositories.csproj", "{8F9B3707-2C4C-4FAD-BC1B-7883497A815A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OptimizeDelivery.API", "OptimizeDelivery.API\OptimizeDelivery.API.csproj", "{2AD6EEF1-62A7-4C14-8AAB-8C57EDE8CCA7}"
 EndProject
@@ -22,6 +22,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OptimizeDelivery.TelegramBotSandbox", "OptimizeDelivery.TelegramBotSandbox\OptimizeDelivery.TelegramBotSandbox.csproj", "{C6BA28C6-C872-47AC-8723-6365F24F3BA8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OptimizeDelivery.ItineroSandbox", "OptimizeDelivery.ItineroSandbox\OptimizeDelivery.ItineroSandbox.csproj", "{456E8E9C-686B-4902-B9E8-9C5C676C56BF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OldProjects", "OldProjects", "{52A4A5E0-7EB9-441D-B066-3F8522D7927D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OptimizeDelivery.Services", "OptimizeDelivery.Services\OptimizeDelivery.Services.csproj", "{9D37B34F-0C1C-4161-8860-C81B96889085}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,11 +73,20 @@ Global
 		{456E8E9C-686B-4902-B9E8-9C5C676C56BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{456E8E9C-686B-4902-B9E8-9C5C676C56BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{456E8E9C-686B-4902-B9E8-9C5C676C56BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D37B34F-0C1C-4161-8860-C81B96889085}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D37B34F-0C1C-4161-8860-C81B96889085}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D37B34F-0C1C-4161-8860-C81B96889085}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D37B34F-0C1C-4161-8860-C81B96889085}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {056D7F40-A7BC-4EF7-8FB1-9B41C796B25B}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{020CD0AA-A70D-4C20-A89E-E7AE06911BDB} = {52A4A5E0-7EB9-441D-B066-3F8522D7927D}
+		{B8570A2D-C21C-4D96-A2A5-D68B3246305A} = {52A4A5E0-7EB9-441D-B066-3F8522D7927D}
+		{C6BA28C6-C872-47AC-8723-6365F24F3BA8} = {52A4A5E0-7EB9-441D-B066-3F8522D7927D}
 	EndGlobalSection
 EndGlobal

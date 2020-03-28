@@ -3,23 +3,23 @@ using System.Diagnostics;
 using System.Web.Http;
 using System.Web.Http.Results;
 using Common.Models.ApiModels;
-using OptimizeDelivery.DataAccessLayer.Services;
+using OptimizeDelivery.Services.Services;
 
 namespace OptimizeDelivery.API.Controllers
 {
     [RoutePrefix("optimizeDelivery")]
     public class OptimizeDeliveryController : ApiController
     {
-        private CourierService CourierService { get; }
-
         public OptimizeDeliveryController()
         {
             CourierService = new CourierService();
         }
-        
+
+        private CourierService CourierService { get; }
+
         [Route("courier/create")]
         [HttpPost]
-        public JsonResult<CreateCourierResult> CreateCourier([FromBody]CreateCourierRequest request)
+        public JsonResult<CreateCourierResult> CreateCourier([FromBody] CreateCourierRequest request)
         {
             try
             {
@@ -35,7 +35,7 @@ namespace OptimizeDelivery.API.Controllers
 
         [Route("courier/route")]
         [HttpPost]
-        public JsonResult<GetRouteResult> GetRoute([FromBody]GetRouteRequest request)
+        public JsonResult<GetRouteResult> GetRoute([FromBody] GetRouteRequest request)
         {
             return Json(CourierService.GetRouteForCourier(request));
         }

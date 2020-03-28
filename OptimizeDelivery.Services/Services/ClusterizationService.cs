@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Accord.MachineLearning;
 using Common;
-using Common.Models.DbMappedModels;
+using Common.Models.BusinessModels;
 using Common.Models.ServiceModels;
 
-namespace OptimizeDelivery.DataAccessLayer.Services
+namespace OptimizeDelivery.Services.Services
 {
     public class ClusterizationService
     {
@@ -49,7 +49,7 @@ namespace OptimizeDelivery.DataAccessLayer.Services
 
             return deliveryClusters.ToArray();
         }
-        
+
         public DeliveryCluster[] ClusterParcelLocationsBalanced(IEnumerable<Parcel> parcels)
         {
             var parcelsArray = parcels.ToArray();

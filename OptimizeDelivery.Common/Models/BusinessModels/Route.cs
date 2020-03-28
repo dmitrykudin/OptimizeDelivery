@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Common.Models.DbMappedModels
+namespace Common.Models.BusinessModels
 {
     public class Route
     {

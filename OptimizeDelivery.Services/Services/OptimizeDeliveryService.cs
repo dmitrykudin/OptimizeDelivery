@@ -4,12 +4,13 @@ using System.Linq;
 using Common.ConvertHelpers;
 using Common.DbModels;
 using Common.Models;
-using Common.Models.DbMappedModels;
+using Common.Models.BusinessModels;
 using Common.Models.ServiceModels;
 using Newtonsoft.Json;
+using OptimizeDelivery.DataAccessLayer;
 using OptimizeDelivery.MapsAPIIntegration;
 
-namespace OptimizeDelivery.DataAccessLayer.Services
+namespace OptimizeDelivery.Services.Services
 {
     public class OptimizeDeliveryService
     {

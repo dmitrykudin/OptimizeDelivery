@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using OptimizeDelivery.DataAccessLayer.Services;
+using OptimizeDelivery.Services.Services;
 
 namespace OptimizeDelivery.DataGenerator
 {

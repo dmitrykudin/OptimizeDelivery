@@ -10,7 +10,7 @@
 
         public override string ToString()
         {
-            return (StepNumber + 1) + ". " + DestinationAddress + ". (" + Distance + ")";
+            return StepNumber + 1 + ". " + DestinationAddress + ". (" + Distance + ")";
         }
     }
 }

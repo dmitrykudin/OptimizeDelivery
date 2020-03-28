@@ -3,7 +3,7 @@ using System.Linq;
 using Common.ConvertHelpers;
 using Common.DbModels;
 using Common.Models.ApiModels;
-using Common.Models.DbMappedModels;
+using Common.Models.BusinessModels;
 
 namespace Common
 {
@@ -19,8 +19,8 @@ namespace Common
             var legs = route.RouteDetails.Legs.Take(route.RouteDetails.Legs.Count() - 1).ToArray();
 
             var routeSteps = new List<RouteStep>();
-            
-            for (int i = 0; i < parcels.Length; i++)
+
+            for (var i = 0; i < parcels.Length; i++)
             {
                 var parcel = parcels[i];
                 var leg = legs[i];
@@ -37,7 +37,7 @@ namespace Common
             {
                 Status = "OK",
                 Steps = routeSteps.ToArray(),
-                RouteUrl = GetRouteUrl(parcels),
+                RouteUrl = GetRouteUrl(parcels)
             };
         }
 

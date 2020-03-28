@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Data.Entity.Spatial;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Common;
 using Common.Models;
-using OptimizeDelivery.DataAccessLayer.Services;
+using OptimizeDelivery.Services.Services;
 
 namespace OptimizeDelivery.DataGenerator
 {

@@ -16,14 +16,11 @@ namespace Common.DbModels
 
         public int? RoutePosition { get; set; }
 
-        [Required] 
-        public DbGeography Location { get; set; }
+        [Required] public DbGeography Location { get; set; }
 
-        [Column(TypeName = "datetime2")] 
-        public DateTime DeliveryDateTimeFromUtc { get; set; }
+        [Column(TypeName = "datetime2")] public DateTime DeliveryDateTimeFromUtc { get; set; }
 
-        [Column(TypeName = "datetime2")] 
-        public DateTime DeliveryDateTimeToUtc { get; set; }
+        [Column(TypeName = "datetime2")] public DateTime DeliveryDateTimeToUtc { get; set; }
 
         public virtual DbDepot Depot { get; set; }
 

@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
 using Common;
 using Common.ConvertHelpers;
 using Common.DbModels;
-using Common.Models.DbMappedModels;
-using OptimizeDelivery.DataAccessLayer.GenericRepository;
-using RandomNameGen;
+using Common.Models.BusinessModels;
+using OptimizeDelivery.DataAccessLayer;
 
-namespace OptimizeDelivery.DataAccessLayer.Services
+namespace OptimizeDelivery.Services.Services
 {
     public class TestDataService
     {
@@ -17,7 +15,7 @@ namespace OptimizeDelivery.DataAccessLayer.Services
             using (var context = new OptimizeDeliveryContext())
             {
                 var depot = context.Set<DbDepot>().FirstOrDefault();
-                
+
                 var rand = new Random(DateTime.Now.Second);
                 for (var i = 0; i < 100; i++)
                 {
@@ -30,14 +28,14 @@ namespace OptimizeDelivery.DataAccessLayer.Services
                         DepotId = depot.Id,
                         Location = Rand.LocationInSPb(),
                         DeliveryDateTimeFromUtc = dateTimeFrom,
-                        DeliveryDateTimeToUtc = dateTimeTo,
+                        DeliveryDateTimeToUtc = dateTimeTo
                     });
                 }
 
                 context.SaveChanges();
             }
         }
-        
+
         public void CreateTestData()
         {
             using (var context = new OptimizeDeliveryContext())
@@ -50,14 +48,12 @@ namespace OptimizeDelivery.DataAccessLayer.Services
                 var rand = new Random(DateTime.Now.Second);
                 // var randomName = new RandomName(rand);
                 for (var i = 0; i < 10; i++)
-                {
                     // var name = randomName.Generate(Sex.Male).Split(' ');
                     context.Set<DbCourier>().Add(new DbCourier
                     {
                         Name = "Courier " + i,
-                        Surname = i.ToString(),
+                        Surname = i.ToString()
                     });
-                }
 
                 context.SaveChanges();
 

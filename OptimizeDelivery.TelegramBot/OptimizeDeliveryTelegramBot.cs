@@ -63,7 +63,7 @@ namespace OptimizeDelivery.TelegramBot
                     {
                         Console.WriteLine(exception.Message);
                     }
-                    
+
                 else
                     await DefaultCommand(e.Message);
             }
@@ -83,7 +83,8 @@ namespace OptimizeDelivery.TelegramBot
         {
             var apiClient = new OptimizeDeliveryApiClient();
             var user = message.From;
-            Console.WriteLine($"Trying register user, Id = {user.Id}, Name = {user.FirstName}, Surname = {user.LastName}");
+            Console.WriteLine(
+                $"Trying register user, Id = {user.Id}, Name = {user.FirstName}, Surname = {user.LastName}");
             var response = await apiClient.CreateCourier(user.Id, user.FirstName, user.LastName);
             switch (response.Status)
             {

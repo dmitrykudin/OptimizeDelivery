@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity.Spatial;
 
-namespace Common.Models.DbMappedModels
+namespace Common.Models.BusinessModels
 {
     public class Depot
     {

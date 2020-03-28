@@ -1,14 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Common.DbModels;
 using Common.Models;
-using Common.Models.ApiModels;
-using Common.Models.DbMappedModels;
+using Common.Models.BusinessModels;
 using Newtonsoft.Json;
 
 namespace Common.ConvertHelpers
 {
-    public static class ConvertHelperFromDbEntities
+    public static class ConvertHelperFromDbToBusinessModels
     {
         public static Parcel ToParcel(this DbParcel dbParcel)
         {

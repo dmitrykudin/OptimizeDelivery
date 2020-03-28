@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Common;
 using Common.Models;
-using Common.Models.DbMappedModels;
+using Common.Models.BusinessModels;
 using Common.Models.ServiceModels;
 using GoogleMapsApi;
 using GoogleMapsApi.Entities.Directions.Request;

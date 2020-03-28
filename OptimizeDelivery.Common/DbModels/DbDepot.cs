@@ -11,8 +11,7 @@ namespace Common.DbModels
     {
         public int Id { get; set; }
 
-        [Required] 
-        public DbGeography Location { get; set; }
+        [Required] public DbGeography Location { get; set; }
 
         public virtual ICollection<DbParcel> Parcels { get; set; }
 
