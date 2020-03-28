@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Common.DbModels;
 using Common.Models;
 using Common.Models.BusinessModels;
@@ -55,7 +56,27 @@ namespace Common.ConvertHelpers
                 {
                     Id = dbCourier.Id,
                     Name = dbCourier.Name,
-                    Surname = dbCourier.Surname
+                    Surname = dbCourier.Surname,
+                    Timetable = dbCourier.Timetable.ToTimetable()
+                };
+        }
+
+        public static Timetable ToTimetable(this DbTimetable dbTimetable)
+        {
+            return dbTimetable == null
+                ? null
+                : new Timetable
+                {
+                    Id = dbTimetable.Id,
+                    Name = dbTimetable.Name,
+                    TimetableDays = dbTimetable.TimetableDays
+                        .Select(x => new TimetableDay
+                        {
+                            StartTime = x.StartTime,
+                            EndTime = x.EndTime,
+                            DayOfWeek = (DayOfWeek) x.DayOfWeek,
+                            IsWeekend = x.IsWeekend
+                        })
                 };
         }
     }

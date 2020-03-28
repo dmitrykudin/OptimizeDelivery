@@ -11,6 +11,6 @@ namespace Common.DbModels
 
         [StringLength(50)] public string Name { get; set; }
 
-        public IEnumerable<DbTimetableDay> TimetableDays { get; set; }
+        public ICollection<DbTimetableDay> TimetableDays { get; set; }
     }
 }

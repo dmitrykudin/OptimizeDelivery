@@ -1,14 +1,13 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
 using Common;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
-namespace OptimizeDelivery.Tests
+namespace OptimizeDelivery.UnitTests
 {
-    [TestClass]
     public class RandomTests
     {
-        [TestMethod]
+        [Test]
         public void RandomLocationTest()
         {
             for (var i = 0; i < 500; i++)

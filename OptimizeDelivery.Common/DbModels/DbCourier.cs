@@ -10,7 +10,7 @@ namespace Common.DbModels
     {
         public int Id { get; set; }
 
-        public int TelegramId { get; set; }
+        public int? TelegramId { get; set; }
 
         [Required] [StringLength(50)] public string Name { get; set; }
 
@@ -18,7 +18,7 @@ namespace Common.DbModels
 
         public int TimetableId { get; set; }
 
-        public virtual DbTimetable Timetable { get; set; }
+        public DbTimetable Timetable { get; set; }
 
         public virtual ICollection<DbRoute> Routes { get; set; }
 

@@ -5,11 +5,12 @@
     <PropertyGroup>
         <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProjectGuid>{9D37B34F-0C1C-4161-8860-C81B96889085}</ProjectGuid>
+        <ProjectGuid>{7428F04E-92C4-4B53-AE14-BFB1A5332478}</ProjectGuid>
+        <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
         <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>OptimizeDelivery.Services</RootNamespace>
-        <AssemblyName>OptimizeDelivery.Services</AssemblyName>
+        <RootNamespace>OptimizeDelivery.UnitTests</RootNamespace>
+        <AssemblyName>OptimizeDelivery.UnitTests</AssemblyName>
         <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
     </PropertyGroup>
@@ -33,26 +34,6 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
-        <Reference Include="Accord, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7">
-          <HintPath>..\packages\Accord.3.8.0\lib\net462\Accord.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-        <Reference Include="Accord.MachineLearning, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7">
-          <HintPath>..\packages\Accord.MachineLearning.3.8.0\lib\net462\Accord.MachineLearning.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-        <Reference Include="Accord.Math, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7">
-          <HintPath>..\packages\Accord.Math.3.8.0\lib\net462\Accord.Math.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-        <Reference Include="Accord.Math.Core, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7">
-          <HintPath>..\packages\Accord.Math.3.8.0\lib\net462\Accord.Math.Core.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-        <Reference Include="Accord.Statistics, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7">
-          <HintPath>..\packages\Accord.Statistics.3.8.0\lib\net462\Accord.Statistics.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
         <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.dll</HintPath>
           <Private>True</Private>
@@ -61,35 +42,28 @@
           <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
           <Private>True</Private>
         </Reference>
-        <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
-          <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
         <Reference Include="System" />
         <Reference Include="System.ComponentModel.DataAnnotations" />
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
         <Reference Include="System.Xml" />
+        <Reference Include="nunit.framework, Version=3.5.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb">
+            <HintPath>..\packages\NUnit.3.5.0\lib\net45\nunit.framework.dll</HintPath>
+        </Reference>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="CourierServiceTests.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
-        <Compile Include="Services\ClusterizationService.cs" />
-        <Compile Include="Services\CourierService.cs" />
-        <Compile Include="Services\OptimizeDeliveryService.cs" />
-        <Compile Include="Services\TestDataService.cs" />
+        <Compile Include="RandomTests.cs" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\OptimizeDelivery.Common\OptimizeDelivery.Common.csproj">
         <Project>{8e00583c-c6cc-4809-af25-c8c152d6030b}</Project>
         <Name>OptimizeDelivery.Common</Name>
       </ProjectReference>
-      <ProjectReference Include="..\OptimizeDelivery.MapsAPIIntegration\OptimizeDelivery.MapsAPIIntegration.csproj">
-        <Project>{020cd0aa-a70d-4c20-a89e-e7ae06911bdb}</Project>
-        <Name>OptimizeDelivery.MapsAPIIntegration</Name>
-      </ProjectReference>
-      <ProjectReference Include="..\OptimizeDelivery.Repositories\OptimizeDelivery.Repositories.csproj">
-        <Project>{8f9b3707-2c4c-4fad-bc1b-7883497a815a}</Project>
-        <Name>OptimizeDelivery.Repositories</Name>
+      <ProjectReference Include="..\OptimizeDelivery.Services\OptimizeDelivery.Services.csproj">
+        <Project>{9d37b34f-0c1c-4161-8860-c81b96889085}</Project>
+        <Name>OptimizeDelivery.Services</Name>
       </ProjectReference>
     </ItemGroup>
     <ItemGroup>
@@ -97,12 +71,10 @@
       <None Include="packages.config" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-    <Import Project="..\packages\Accord.3.8.0\build\Accord.targets" Condition="Exists('..\packages\Accord.3.8.0\build\Accord.targets')" />
     <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
       <PropertyGroup>
         <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
       </PropertyGroup>
-      <Error Condition="!Exists('..\packages\Accord.3.8.0\build\Accord.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Accord.3.8.0\build\Accord.targets'))" />
       <Error Condition="!Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.0\build\EntityFramework.props'))" />
       <Error Condition="!Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.0\build\EntityFramework.targets'))" />
     </Target>

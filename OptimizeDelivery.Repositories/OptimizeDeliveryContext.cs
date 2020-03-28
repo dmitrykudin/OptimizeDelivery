@@ -17,6 +17,10 @@ namespace OptimizeDelivery.DataAccessLayer
 
         public virtual DbSet<DbRoute> Routes { get; set; }
 
+        public virtual DbSet<DbTimetable> Timetables { get; set; }
+
+        public virtual DbSet<DbTimetableDay> DbTimetableDays { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DbParcel>()
@@ -28,6 +32,11 @@ namespace OptimizeDelivery.DataAccessLayer
                 .HasRequired(x => x.Depot)
                 .WithMany(y => y.Parcels)
                 .HasForeignKey(x => x.DepotId);
+
+            modelBuilder.Entity<DbTimetableDay>()
+                .HasRequired(x => x.Timetable)
+                .WithMany(x => x.TimetableDays)
+                .HasForeignKey(x => x.TimetableId);
         }
     }
 }
