@@ -5,6 +5,7 @@ using Accord.MachineLearning;
 using Common;
 using Common.Models.BusinessModels;
 using Common.Models.ServiceModels;
+using Const = Common.Constants.Const;
 
 namespace OptimizeDelivery.Services.Services
 {
@@ -21,7 +22,7 @@ namespace OptimizeDelivery.Services.Services
                 })
                 .ToArray();
             var numberOfClusters =
-                Convert.ToInt32(Math.Ceiling((double) parcelLocations.Length / Constants.DefaultParcelsPerDay));
+                Convert.ToInt32(Math.Ceiling((double) parcelLocations.Length / Const.DefaultParcelsPerDay));
             var kMeans = new KMeans(numberOfClusters);
 
             var clusters = kMeans.Learn(parcelLocations);
@@ -61,7 +62,7 @@ namespace OptimizeDelivery.Services.Services
                 })
                 .ToArray();
             var numberOfClusters =
-                Convert.ToInt32(Math.Ceiling((double) parcelLocations.Length / Constants.DefaultParcelsPerDay));
+                Convert.ToInt32(Math.Ceiling((double) parcelLocations.Length / Const.DefaultParcelsPerDay));
 
             var balancedKMeans = new BalancedKMeans(numberOfClusters)
             {

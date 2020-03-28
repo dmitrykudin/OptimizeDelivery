@@ -62,7 +62,6 @@
     <Compile Include="OptimizeDeliveryContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CourierRepository.cs" />
-    <Compile Include="Repositories\TimetableRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

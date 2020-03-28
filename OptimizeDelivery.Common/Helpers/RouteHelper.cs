@@ -5,7 +5,7 @@ using Common.DbModels;
 using Common.Models.ApiModels;
 using Common.Models.BusinessModels;
 
-namespace Common
+namespace Common.Helpers
 {
     public static class RouteHelper
     {
@@ -49,7 +49,7 @@ namespace Common
                     .Take(parcels.Length - 1)
                     .Select(x => x.Location.ToStringNoWhitespace()));
             return string.Join("&",
-                Constants.GoogleMapsSharedLinkBaseUrl,
+                Constants.Const.GoogleMapsSharedLinkBaseUrl,
                 "destination=" + destination,
                 "waypoints=" + waypoints);
         }

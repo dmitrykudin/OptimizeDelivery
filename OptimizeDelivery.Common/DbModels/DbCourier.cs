@@ -16,9 +16,7 @@ namespace Common.DbModels
 
         [StringLength(50)] public string Surname { get; set; }
 
-        public int TimetableId { get; set; }
-
-        public DbTimetable Timetable { get; set; }
+        public ICollection<DbTimetableDay> WorkingDays { get; set; }
 
         public virtual ICollection<DbRoute> Routes { get; set; }
 

@@ -2,6 +2,7 @@
 using Common.Models;
 using GoogleMapsApi.Entities.Common;
 using GoogleMapsApi.Entities.Directions.Response;
+using Const = Common.Constants.Const;
 
 namespace OptimizeDelivery.MapsAPIIntegration.ConvertHelpers
 {
@@ -20,8 +21,8 @@ namespace OptimizeDelivery.MapsAPIIntegration.ConvertHelpers
                     StartLocation = leg.StartLocation.ToCoordinate(),
                     EndAddress = leg.EndAddress,
                     EndLocation = leg.EndLocation.ToCoordinate(),
-                    DepartureTime = Constants.BaseDateTime + leg.DepartureTime?.Value,
-                    ArrivalTime = Constants.BaseDateTime + leg.ArrivalTime?.Value
+                    DepartureTime = Const.BaseDateTime + leg.DepartureTime?.Value,
+                    ArrivalTime = Const.BaseDateTime + leg.ArrivalTime?.Value
                 };
         }
 

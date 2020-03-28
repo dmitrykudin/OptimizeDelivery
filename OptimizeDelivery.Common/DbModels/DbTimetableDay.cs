@@ -8,7 +8,7 @@ namespace Common.DbModels
     {
         public int Id { get; set; }
         
-        public int TimetableId { get; set; }
+        public int CourierId { get; set; }
 
         public TimeSpan StartTime { get; set; }
 
@@ -18,6 +18,6 @@ namespace Common.DbModels
 
         public bool IsWeekend { get; set; }
 
-        public virtual DbTimetable Timetable { get; set; }
+        public virtual DbCourier Courier { get; set; }
     }
 }

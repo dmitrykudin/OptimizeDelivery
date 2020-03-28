@@ -2,15 +2,15 @@
 using System.Data.Entity.Spatial;
 using System.Threading;
 
-namespace Common
+namespace Common.Helpers
 {
-    public static class Rand
+    public static class RandHelper
     {
         private static readonly Random random = new Random(DateTime.Now.Second);
 
         public static DbGeography LocationInSPb()
         {
-            var spb = Constants.SaintPetersburg;
+            var spb = Constants.Const.SaintPetersburg;
             var pointCount = spb.PointCount;
             if (!pointCount.HasValue) return null;
 
@@ -20,8 +20,8 @@ namespace Common
             {
                 var (firstPoint, secondPoint) = GetTwoRandomPointsFrom(spb, pointCount.Value);
                 resultPoint = GetRandomPointBetween(firstPoint, secondPoint);
-                inWater = resultPoint.Distance(Constants.SaintPetersburgBorderLine) <
-                          resultPoint.Distance(Constants.SaintPetersburg);
+                inWater = resultPoint.Distance(Constants.Const.SaintPetersburgBorderLine) <
+                          resultPoint.Distance(Constants.Const.SaintPetersburg);
             }
 
             return resultPoint;

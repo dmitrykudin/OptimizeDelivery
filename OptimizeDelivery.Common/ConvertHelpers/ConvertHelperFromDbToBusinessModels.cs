@@ -57,19 +57,7 @@ namespace Common.ConvertHelpers
                     Id = dbCourier.Id,
                     Name = dbCourier.Name,
                     Surname = dbCourier.Surname,
-                    Timetable = dbCourier.Timetable.ToTimetable()
-                };
-        }
-
-        public static Timetable ToTimetable(this DbTimetable dbTimetable)
-        {
-            return dbTimetable == null
-                ? null
-                : new Timetable
-                {
-                    Id = dbTimetable.Id,
-                    Name = dbTimetable.Name,
-                    TimetableDays = dbTimetable.TimetableDays
+                    WorkingDays = dbCourier.WorkingDays
                         .Select(x => new TimetableDay
                         {
                             StartTime = x.StartTime,

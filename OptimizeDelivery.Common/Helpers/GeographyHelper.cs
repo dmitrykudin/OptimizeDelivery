@@ -6,7 +6,7 @@ using System.Linq;
 using Common.Models;
 using Microsoft.SqlServer.Types;
 
-namespace Common
+namespace Common.Helpers
 {
     public static class GeographyHelper
     {
@@ -19,7 +19,7 @@ namespace Common
 
         public static DbGeography GetPoint(double latitude, double longitude)
         {
-            return DbGeography.PointFromText(GetPointString(latitude, longitude), Constants.DefaultCoordinateSystemId);
+            return DbGeography.PointFromText(GetPointString(latitude, longitude), Constants.Const.DefaultCoordinateSystemId);
         }
 
         public static string GetMultipolygonString(IEnumerable<Coordinate> coordinates)
@@ -47,9 +47,9 @@ namespace Common
         {
             return location == null
                 ? null
-                : location.Latitude.Value.ToString(Constants.DefaultCoordinateOutputFormat,
+                : location.Latitude.Value.ToString(Constants.Const.DefaultCoordinateOutputFormat,
                       CultureInfo.InvariantCulture) + "," +
-                  location.Longitude.Value.ToString(Constants.DefaultCoordinateOutputFormat,
+                  location.Longitude.Value.ToString(Constants.Const.DefaultCoordinateOutputFormat,
                       CultureInfo.InvariantCulture);
         }
     }

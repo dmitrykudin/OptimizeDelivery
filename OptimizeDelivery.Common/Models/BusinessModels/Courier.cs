@@ -12,7 +12,7 @@ namespace Common.Models.BusinessModels
 
         public string Surname { get; set; }
 
-        public Timetable Timetable { get; set; }
+        public IEnumerable<TimetableDay> WorkingDays { get; set; }
 
         public IEnumerable<Route> Routes { get; set; }
     }

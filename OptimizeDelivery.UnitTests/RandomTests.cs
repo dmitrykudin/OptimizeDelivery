@@ -1,7 +1,9 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
 using Common;
+using Common.Helpers;
 using NUnit.Framework;
+using Const = Common.Constants.Const;
 
 namespace OptimizeDelivery.UnitTests
 {
@@ -12,11 +14,11 @@ namespace OptimizeDelivery.UnitTests
         {
             for (var i = 0; i < 500; i++)
             {
-                var locationInSPb = Rand.LocationInSPb();
+                var locationInSPb = RandHelper.LocationInSPb();
                 Debug.WriteLine(string.Join(", ", locationInSPb.Longitude.Value.ToString(
-                    Constants.DefaultCoordinateOutputFormat,
+                    Const.DefaultCoordinateOutputFormat,
                     CultureInfo.InvariantCulture), locationInSPb.Latitude.Value.ToString(
-                    Constants.DefaultCoordinateOutputFormat,
+                    Const.DefaultCoordinateOutputFormat,
                     CultureInfo.InvariantCulture)));
             }
         }

@@ -56,26 +56,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstractions\Repositories\ICourierRepository.cs" />
-    <Compile Include="Abstractions\Repositories\ITimetableRepository.cs" />
     <Compile Include="Abstractions\Services\ICourierService.cs" />
-    <Compile Include="Constants.cs" />
-    <Compile Include="Constants.SaintPetersburg.cs" />
+    <Compile Include="Constants\Const.cs" />
+    <Compile Include="Constants\Const.SaintPetersburg.cs" />
     <Compile Include="ConvertHelpers\ConvertHelperFromBusinessToDbModels.cs" />
     <Compile Include="ConvertHelpers\ConvertHelperFromDbToBusinessModels.cs" />
     <Compile Include="DbModels\DbCourier.cs" />
     <Compile Include="DbModels\DbDepot.cs" />
     <Compile Include="DbModels\DbParcel.cs" />
     <Compile Include="DbModels\DbRoute.cs" />
-    <Compile Include="DbModels\DbTimetable.cs" />
     <Compile Include="DbModels\DbTimetableDay.cs" />
     <Compile Include="Enums\DayOfWeek.cs" />
-    <Compile Include="GeographyHelper.cs" />
+    <Compile Include="Helpers\GeographyHelper.cs" />
+    <Compile Include="Helpers\RandHelper.cs" />
+    <Compile Include="Helpers\RouteHelper.cs" />
     <Compile Include="Models\ApiModels\GetRouteRequest.cs" />
     <Compile Include="Models\ApiModels\CreateCourierRequest.cs" />
     <Compile Include="Models\ApiModels\CreateCourierResult.cs" />
     <Compile Include="Models\ApiModels\GetRouteResult.cs" />
     <Compile Include="Models\ApiModels\RouteStep.cs" />
-    <Compile Include="Models\BusinessModels\Timetable.cs" />
     <Compile Include="Models\BusinessModels\TimetableDay.cs" />
     <Compile Include="Models\Coordinate.cs" />
     <Compile Include="Models\BusinessModels\Courier.cs" />
@@ -88,8 +87,6 @@
     <Compile Include="Models\ServiceModels\DeliveryLocation.cs" />
     <Compile Include="Models\ServiceModels\DeliveryCluster.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rand.cs" />
-    <Compile Include="RouteHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

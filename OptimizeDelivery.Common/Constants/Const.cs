@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Data.Entity.Spatial;
+using Common.Helpers;
 
-namespace Common
+namespace Common.Constants
 {
-    public static partial class Constants
+    public static partial class Const
     {
         public static int DefaultParcelsPerDay = 9;
 

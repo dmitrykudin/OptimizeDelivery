@@ -3,8 +3,10 @@ using System.Linq;
 using Common;
 using Common.ConvertHelpers;
 using Common.DbModels;
+using Common.Helpers;
 using Common.Models.BusinessModels;
 using OptimizeDelivery.DataAccessLayer;
+using Const = Common.Constants.Const;
 
 namespace OptimizeDelivery.Services.Services
 {
@@ -26,7 +28,7 @@ namespace OptimizeDelivery.Services.Services
                     context.Set<DbParcel>().Add(new DbParcel
                     {
                         DepotId = depot.Id,
-                        Location = Rand.LocationInSPb(),
+                        Location = RandHelper.LocationInSPb(),
                         DeliveryDateTimeFromUtc = dateTimeFrom,
                         DeliveryDateTimeToUtc = dateTimeTo
                     });
@@ -42,7 +44,7 @@ namespace OptimizeDelivery.Services.Services
             {
                 var depot = context.Set<DbDepot>().Add(new DbDepot
                 {
-                    Location = Constants.DefaultDepotCoordinate
+                    Location = Const.DefaultDepotCoordinate
                 });
 
                 var rand = new Random(DateTime.Now.Second);
@@ -64,7 +66,7 @@ namespace OptimizeDelivery.Services.Services
                     context.Set<DbParcel>().Add(new DbParcel
                     {
                         DepotId = depot.Id,
-                        Location = Rand.LocationInSPb(),
+                        Location = RandHelper.LocationInSPb(),
                         DeliveryDateTimeFromUtc = DateTime.Now.AddHours(dateTimeFromOffset),
                         DeliveryDateTimeToUtc = DateTime.Now.AddHours(dateTimeToOffset)
                     });
@@ -80,7 +82,7 @@ namespace OptimizeDelivery.Services.Services
             {
                 return context
                     .Set<DbDepot>()
-                    .FirstOrDefault(x => x.Location.SpatialEquals(Constants.DefaultDepotCoordinate))
+                    .FirstOrDefault(x => x.Location.SpatialEquals(Const.DefaultDepotCoordinate))
                     .ToDepot();
             }
         }

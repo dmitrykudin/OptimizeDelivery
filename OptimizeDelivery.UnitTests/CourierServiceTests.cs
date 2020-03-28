@@ -5,7 +5,7 @@ using Common.Models.BusinessModels;
 using NUnit.Framework;
 using OptimizeDelivery.Services.Services;
 
-namespace OptimizeDelivery.Tests
+namespace OptimizeDelivery.UnitTests
 {
     public class CourierServiceTests
     {
@@ -48,18 +48,13 @@ namespace OptimizeDelivery.Tests
             {
                 Name = "Alex",
                 Surname = "Goldberg",
-                Timetable = new Timetable
-                {
-                    Name = "5/2",
-                    TimetableDays = timetableDays.ToArray()
-                }
+                WorkingDays =  timetableDays.ToArray()
             };
 
             var createdCourier = CourierService.CreateCourier(courier);
             
             Assert.AreEqual(courier.Name, createdCourier.Name);
             Assert.AreEqual(courier.Surname, createdCourier.Surname);
-            Assert.AreEqual(courier.Timetable.Name, createdCourier.Timetable.Name);
         }
     }
 }

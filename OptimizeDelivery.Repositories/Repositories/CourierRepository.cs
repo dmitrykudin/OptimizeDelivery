@@ -19,7 +19,26 @@ namespace OptimizeDelivery.DataAccessLayer.Repositories
                     {
                         Name = courier.Name,
                         Surname = courier.Surname,
-                        TimetableId = courier.Timetable.Id,
+                        WorkingDays = courier.WorkingDays
+                            .Select(x =>
+                            {
+                                var startTime = x.IsWeekend
+                                    ? TimeSpan.Zero
+                                    : x.StartTime;
+
+                                var endTime = x.IsWeekend
+                                    ? TimeSpan.Zero
+                                    : x.EndTime;
+
+                                return new DbTimetableDay
+                                {
+                                    StartTime = startTime,
+                                    EndTime = endTime,
+                                    DayOfWeek = (int) x.DayOfWeek,
+                                    IsWeekend = x.IsWeekend
+                                };
+                            })
+                            .ToList()
                     });
 
                 context.SaveChanges();
@@ -34,8 +53,7 @@ namespace OptimizeDelivery.DataAccessLayer.Repositories
             {
                 return context
                     .Set<DbCourier>()
-                    .Include(x => x.Timetable)
-                    .Include(x => x.Timetable.TimetableDays)
+                    .Include(x => x.WorkingDays)
                     .FirstOrDefault(x => x.Id == id);
             }
         }

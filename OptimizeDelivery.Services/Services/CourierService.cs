@@ -6,6 +6,7 @@ using Common.Abstractions.Repositories;
 using Common.Abstractions.Services;
 using Common.ConvertHelpers;
 using Common.DbModels;
+using Common.Helpers;
 using Common.Models.ApiModels;
 using Common.Models.BusinessModels;
 using OptimizeDelivery.DataAccessLayer;
@@ -15,21 +16,15 @@ namespace OptimizeDelivery.Services.Services
 {
     public class CourierService : ICourierService
     {
-        private ICourierRepository CourierRepository { get; set; }
-        
-        private ITimetableRepository TimetableRepository { get; set; }
+        private ICourierRepository CourierRepository { get; }
         
         public CourierService()
         {
             CourierRepository = new CourierRepository();
-            TimetableRepository = new TimetableRepository();
         }
 
         public Courier CreateCourier(Courier courier)
         {
-            var timetableFromDb = TimetableRepository.CreateTimetable(courier.Timetable);
-            courier.Timetable.Id = timetableFromDb.Id;
-
             var courierFromDbId = CourierRepository.CreateCourier(courier);
             var courierFromDb = CourierRepository.GetCourier(courierFromDbId);
 
