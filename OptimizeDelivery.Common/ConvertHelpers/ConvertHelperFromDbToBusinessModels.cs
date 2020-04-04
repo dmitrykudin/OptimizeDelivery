@@ -3,6 +3,8 @@ using System.Linq;
 using Common.DbModels;
 using Common.Models;
 using Common.Models.BusinessModels;
+using NetTopologySuite.Geometries;
+using NetTopologySuite.IO;
 using Newtonsoft.Json;
 
 namespace Common.ConvertHelpers
@@ -57,6 +59,7 @@ namespace Common.ConvertHelpers
                     Id = dbCourier.Id,
                     Name = dbCourier.Name,
                     Surname = dbCourier.Surname,
+                    WorkingDistrict = dbCourier.WorkingDistrict.ToDistrict(),
                     WorkingDays = dbCourier.WorkingDays
                         .Select(x => new TimetableDay
                         {
@@ -65,6 +68,20 @@ namespace Common.ConvertHelpers
                             DayOfWeek = (DayOfWeek) x.DayOfWeek,
                             IsWeekend = x.IsWeekend
                         })
+                };
+        }
+
+        public static District ToDistrict(this DbDistrict dbDistrict)
+        {
+            var wkbReader = new WKBReader();
+
+            return dbDistrict == null
+                ? null
+                : new District
+                {
+                    Id = dbDistrict.Id,
+                    Name = dbDistrict.Name,
+                    Area = wkbReader.Read(dbDistrict.Area.AsBinary()),
                 };
         }
     }

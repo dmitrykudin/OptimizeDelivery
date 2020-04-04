@@ -44,25 +44,50 @@
     <Reference Include="Microsoft.SqlServer.Types, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
       <HintPath>..\..\..\..\..\WINDOWS\assembly\GAC_MSIL\Microsoft.SqlServer.Types\11.0.0.0__89845dcd8080cc91\Microsoft.SqlServer.Types.dll</HintPath>
     </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="NetTopologySuite, Version=2.0.0.0, Culture=neutral, PublicKeyToken=f580a05016ebada1">
+      <HintPath>..\packages\NetTopologySuite.2.0.0\lib\netstandard2.0\NetTopologySuite.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
+      <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
+      <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstractions\Repositories\ICourierRepository.cs" />
+    <Compile Include="Abstractions\Repositories\IDistrictRepository.cs" />
     <Compile Include="Abstractions\Services\ICourierService.cs" />
+    <Compile Include="Abstractions\Services\IDistrictService.cs" />
     <Compile Include="Constants\Const.cs" />
     <Compile Include="Constants\Const.SaintPetersburg.cs" />
     <Compile Include="ConvertHelpers\ConvertHelperFromBusinessToDbModels.cs" />
     <Compile Include="ConvertHelpers\ConvertHelperFromDbToBusinessModels.cs" />
     <Compile Include="DbModels\DbCourier.cs" />
     <Compile Include="DbModels\DbDepot.cs" />
+    <Compile Include="DbModels\DbDistrict.cs" />
     <Compile Include="DbModels\DbParcel.cs" />
     <Compile Include="DbModels\DbRoute.cs" />
     <Compile Include="DbModels\DbTimetableDay.cs" />
@@ -75,6 +100,7 @@
     <Compile Include="Models\ApiModels\CreateCourierResult.cs" />
     <Compile Include="Models\ApiModels\GetRouteResult.cs" />
     <Compile Include="Models\ApiModels\RouteStep.cs" />
+    <Compile Include="Models\BusinessModels\District.cs" />
     <Compile Include="Models\BusinessModels\TimetableDay.cs" />
     <Compile Include="Models\Coordinate.cs" />
     <Compile Include="Models\BusinessModels\Courier.cs" />

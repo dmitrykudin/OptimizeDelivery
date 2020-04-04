@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Common.Abstractions.Services;
 using Common.Models.BusinessModels;
+using NetTopologySuite.Geometries;
 using NUnit.Framework;
 using OptimizeDelivery.Services.Services;
 
@@ -9,7 +10,7 @@ namespace OptimizeDelivery.UnitTests
 {
     public class CourierServiceTests
     {
-        private ICourierService CourierService { get; set; }
+        private ICourierService CourierService { get; }
 
         public CourierServiceTests()
         {

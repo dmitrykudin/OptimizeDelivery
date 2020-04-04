@@ -8,6 +8,8 @@ namespace OptimizeDelivery.DataGenerator
     {
         public static void Main(string[] args)
         {
+            Sandbox.FillDistrictsTable();
+/*
             Sandbox.CreateTestData();
 
             var optimizeDeliveryService = new OptimizeDeliveryService();
@@ -33,6 +35,7 @@ namespace OptimizeDelivery.DataGenerator
             Console.WriteLine("Created routes, count: " + mapRoutes.Length);
 
             Console.WriteLine("Finished");
+*/
         }
     }
 }

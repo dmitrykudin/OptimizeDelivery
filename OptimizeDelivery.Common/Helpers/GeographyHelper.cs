@@ -28,7 +28,7 @@ namespace Common.Helpers
             return $"MULTIPOLYGON((({coordinatesString})))";
         }
 
-        public static DbGeography CreatePolygon(string wellKnownText)
+        public static DbGeography WktToDbGeography(string wellKnownText)
         {
             //First, get the area defined by the well-known text using left-hand rule
             var sqlGeography =

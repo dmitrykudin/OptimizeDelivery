@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity.Spatial;
 using System.IO;
 using System.Linq;
 using Common;
 using Common.Helpers;
 using Common.Models;
+using Common.Models.BusinessModels;
+using NetTopologySuite.IO;
 using OptimizeDelivery.Services.Services;
 
 namespace OptimizeDelivery.DataGenerator
@@ -110,6 +113,28 @@ namespace OptimizeDelivery.DataGenerator
                         Longitude = longitude
                     });
                 }
+            }
+        }
+
+        public static void FillDistrictsTable()
+        {
+            var districtService = new DistrictService();
+            var mapsFolder = ConfigurationManager.AppSettings["MapsFolder"];
+            var districtFilePaths = Directory.GetFiles(mapsFolder, "*_wkt.txt");
+
+            var wktReader = new WKTReader();
+
+            var districts = districtFilePaths
+                .Select(x => new District
+                {
+                    Name = Path.GetFileNameWithoutExtension(x).Split('_')[0],
+                    Area = wktReader.Read(File.ReadAllText(x)),
+                });
+
+            foreach (var district in districts)
+            {
+                var districtId = districtService.CreateDistrict(district);
+                Console.WriteLine($"District Id: {districtId}, Name: {district.Name} created.");
             }
         }
     }
