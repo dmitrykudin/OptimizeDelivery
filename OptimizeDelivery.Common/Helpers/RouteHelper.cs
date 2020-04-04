@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Common.Constants;
 using Common.ConvertHelpers;
 using Common.DbModels;
 using Common.Models.ApiModels;
@@ -49,7 +50,7 @@ namespace Common.Helpers
                     .Take(parcels.Length - 1)
                     .Select(x => x.Location.ToStringNoWhitespace()));
             return string.Join("&",
-                Constants.Const.GoogleMapsSharedLinkBaseUrl,
+                Const.GoogleMapsSharedLinkBaseUrl,
                 "destination=" + destination,
                 "waypoints=" + waypoints);
         }

@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Accord.MachineLearning;
-using Common;
+using Common.Constants;
 using Common.Models.BusinessModels;
 using Common.Models.ServiceModels;
-using Const = Common.Constants.Const;
 
 namespace OptimizeDelivery.Services.Services
 {

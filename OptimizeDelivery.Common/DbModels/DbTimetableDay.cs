@@ -7,7 +7,7 @@ namespace Common.DbModels
     public class DbTimetableDay
     {
         public int Id { get; set; }
-        
+
         public int CourierId { get; set; }
 
         public TimeSpan StartTime { get; set; }

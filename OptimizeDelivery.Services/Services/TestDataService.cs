@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Linq;
-using Common;
+using Common.Constants;
 using Common.ConvertHelpers;
 using Common.DbModels;
 using Common.Helpers;
 using Common.Models.BusinessModels;
 using OptimizeDelivery.DataAccessLayer;
-using Const = Common.Constants.Const;
 
 namespace OptimizeDelivery.Services.Services
 {

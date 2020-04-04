@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using OptimizeDelivery.Services.Services;
-
-namespace OptimizeDelivery.DataGenerator
+﻿namespace OptimizeDelivery.DataGenerator
 {
     internal class Program
     {

@@ -7,5 +7,9 @@ namespace Common.Abstractions.Repositories
         int CreateDistrict(District district);
 
         District GetDistrict(int districtId);
+
+        District GetDistrict(string districtName);
+
+        District[] GetAllDistricts();
     }
 }

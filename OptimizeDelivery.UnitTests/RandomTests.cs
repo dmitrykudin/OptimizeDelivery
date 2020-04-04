@@ -1,9 +1,8 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
-using Common;
+using Common.Constants;
 using Common.Helpers;
 using NUnit.Framework;
-using Const = Common.Constants.Const;
 
 namespace OptimizeDelivery.UnitTests
 {

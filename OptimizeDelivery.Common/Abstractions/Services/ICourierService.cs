@@ -1,5 +1,4 @@
-﻿using Common.DbModels;
-using Common.Models.BusinessModels;
+﻿using Common.Models.BusinessModels;
 
 namespace Common.Abstractions.Services
 {

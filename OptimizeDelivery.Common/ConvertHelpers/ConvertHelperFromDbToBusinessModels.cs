@@ -3,7 +3,6 @@ using System.Linq;
 using Common.DbModels;
 using Common.Models;
 using Common.Models.BusinessModels;
-using NetTopologySuite.Geometries;
 using NetTopologySuite.IO;
 using Newtonsoft.Json;
 
@@ -81,7 +80,7 @@ namespace Common.ConvertHelpers
                 {
                     Id = dbDistrict.Id,
                     Name = dbDistrict.Name,
-                    Area = wkbReader.Read(dbDistrict.Area.AsBinary()),
+                    Area = wkbReader.Read(dbDistrict.Area.AsBinary())
                 };
         }
     }

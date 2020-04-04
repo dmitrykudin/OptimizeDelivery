@@ -1,8 +1,7 @@
-﻿using Common;
+﻿using Common.Constants;
 using Common.Models;
 using GoogleMapsApi.Entities.Common;
 using GoogleMapsApi.Entities.Directions.Response;
-using Const = Common.Constants.Const;
 
 namespace OptimizeDelivery.MapsAPIIntegration.ConvertHelpers
 {

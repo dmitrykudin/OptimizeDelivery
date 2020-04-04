@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using NetTopologySuite.Geometries;
 
 namespace Common.Models.BusinessModels
 {
@@ -14,7 +13,7 @@ namespace Common.Models.BusinessModels
         public int TelegramId { get; set; }
 
         public int WorkingDistrictId { get; set; }
-        
+
         public District WorkingDistrict { get; set; }
 
         public IEnumerable<TimetableDay> WorkingDays { get; set; }

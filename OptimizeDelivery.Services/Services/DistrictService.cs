@@ -7,19 +7,24 @@ namespace OptimizeDelivery.Services.Services
 {
     public class DistrictService : IDistrictService
     {
-        public IDistrictRepository DistrictRepository { get; set; }
-
         public DistrictService()
         {
             DistrictRepository = new DistrictRepository();
         }
-        
+
+        public IDistrictRepository DistrictRepository { get; set; }
+
         public District CreateDistrict(District district)
         {
             var districtFromDbId = DistrictRepository.CreateDistrict(district);
             var districtFromDb = DistrictRepository.GetDistrict(districtFromDbId);
 
             return districtFromDb;
+        }
+
+        public District[] GetAllDistricts()
+        {
+            return DistrictRepository.GetAllDistricts();
         }
     }
 }

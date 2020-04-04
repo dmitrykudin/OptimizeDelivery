@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data.Entity.Spatial;
 using System.Linq;
 using Common.DbModels;
 using Common.Helpers;
@@ -17,6 +16,7 @@ namespace Common.ConvertHelpers
                 {
                     Name = courier.Name,
                     Surname = courier.Surname,
+                    WorkingDistrictId = courier.WorkingDistrictId,
                     WorkingDays = courier.WorkingDays
                         .Select(x =>
                         {
@@ -39,7 +39,7 @@ namespace Common.ConvertHelpers
                         .ToList()
                 };
         }
-        
+
         public static DbDistrict ToDbDistrict(this District district)
         {
             return district == null
@@ -47,7 +47,7 @@ namespace Common.ConvertHelpers
                 : new DbDistrict
                 {
                     Name = district.Name,
-                    Area = GeographyHelper.WktToDbGeography(district.Area.ToText()),
+                    Area = GeographyHelper.WktToDbGeography(district.Area.ToText())
                 };
         }
     }

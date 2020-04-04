@@ -4,7 +4,6 @@ using System.Configuration;
 using System.Data.Entity.Spatial;
 using System.IO;
 using System.Linq;
-using Common;
 using Common.Helpers;
 using Common.Models;
 using Common.Models.BusinessModels;
@@ -128,7 +127,7 @@ namespace OptimizeDelivery.DataGenerator
                 .Select(x => new District
                 {
                     Name = Path.GetFileNameWithoutExtension(x).Split('_')[0],
-                    Area = wktReader.Read(File.ReadAllText(x)),
+                    Area = wktReader.Read(File.ReadAllText(x))
                 });
 
             foreach (var district in districts)

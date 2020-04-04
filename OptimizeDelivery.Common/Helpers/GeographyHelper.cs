@@ -3,6 +3,7 @@ using System.Data.Entity.Spatial;
 using System.Data.SqlTypes;
 using System.Globalization;
 using System.Linq;
+using Common.Constants;
 using Common.Models;
 using Microsoft.SqlServer.Types;
 
@@ -19,7 +20,7 @@ namespace Common.Helpers
 
         public static DbGeography GetPoint(double latitude, double longitude)
         {
-            return DbGeography.PointFromText(GetPointString(latitude, longitude), Constants.Const.DefaultCoordinateSystemId);
+            return DbGeography.PointFromText(GetPointString(latitude, longitude), Const.DefaultCoordinateSystemId);
         }
 
         public static string GetMultipolygonString(IEnumerable<Coordinate> coordinates)
@@ -47,9 +48,9 @@ namespace Common.Helpers
         {
             return location == null
                 ? null
-                : location.Latitude.Value.ToString(Constants.Const.DefaultCoordinateOutputFormat,
+                : location.Latitude.Value.ToString(Const.DefaultCoordinateOutputFormat,
                       CultureInfo.InvariantCulture) + "," +
-                  location.Longitude.Value.ToString(Constants.Const.DefaultCoordinateOutputFormat,
+                  location.Longitude.Value.ToString(Const.DefaultCoordinateOutputFormat,
                       CultureInfo.InvariantCulture);
         }
     }

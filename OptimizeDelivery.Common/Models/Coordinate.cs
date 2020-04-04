@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using Common.Constants;
 
 namespace Common.Models
 {
@@ -10,26 +11,26 @@ namespace Common.Models
 
         public override string ToString()
         {
-            return Latitude.ToString(Constants.Const.DefaultCoordinateOutputFormat, CultureInfo.InvariantCulture) + ", " +
-                   Longitude.ToString(Constants.Const.DefaultCoordinateOutputFormat, CultureInfo.InvariantCulture);
+            return Latitude.ToString(Const.DefaultCoordinateOutputFormat, CultureInfo.InvariantCulture) + ", " +
+                   Longitude.ToString(Const.DefaultCoordinateOutputFormat, CultureInfo.InvariantCulture);
         }
 
         public string ToStringNoWhitespace()
         {
-            return Latitude.ToString(Constants.Const.DefaultCoordinateOutputFormat, CultureInfo.InvariantCulture) + "," +
-                   Longitude.ToString(Constants.Const.DefaultCoordinateOutputFormat, CultureInfo.InvariantCulture);
+            return Latitude.ToString(Const.DefaultCoordinateOutputFormat, CultureInfo.InvariantCulture) + "," +
+                   Longitude.ToString(Const.DefaultCoordinateOutputFormat, CultureInfo.InvariantCulture);
         }
 
         public string ToStringForMultipolygon()
         {
-            return Longitude.ToString(Constants.Const.DefaultCoordinateOutputFormat, CultureInfo.InvariantCulture) + " " +
-                   Latitude.ToString(Constants.Const.DefaultCoordinateOutputFormat, CultureInfo.InvariantCulture);
+            return Longitude.ToString(Const.DefaultCoordinateOutputFormat, CultureInfo.InvariantCulture) + " " +
+                   Latitude.ToString(Const.DefaultCoordinateOutputFormat, CultureInfo.InvariantCulture);
         }
 
         public string ToStringInverted()
         {
-            return Longitude.ToString(Constants.Const.DefaultCoordinateOutputFormat, CultureInfo.InvariantCulture) + ", " +
-                   Latitude.ToString(Constants.Const.DefaultCoordinateOutputFormat, CultureInfo.InvariantCulture);
+            return Longitude.ToString(Const.DefaultCoordinateOutputFormat, CultureInfo.InvariantCulture) + ", " +
+                   Latitude.ToString(Const.DefaultCoordinateOutputFormat, CultureInfo.InvariantCulture);
         }
     }
 }

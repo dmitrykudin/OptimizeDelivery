@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Linq;
-using Common;
 using Common.Abstractions.Repositories;
 using Common.Abstractions.Services;
 using Common.ConvertHelpers;
@@ -16,12 +15,12 @@ namespace OptimizeDelivery.Services.Services
 {
     public class CourierService : ICourierService
     {
-        private ICourierRepository CourierRepository { get; }
-        
         public CourierService()
         {
             CourierRepository = new CourierRepository();
         }
+
+        private ICourierRepository CourierRepository { get; }
 
         public Courier CreateCourier(Courier courier)
         {
