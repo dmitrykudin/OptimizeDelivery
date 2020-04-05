@@ -53,5 +53,36 @@ namespace Common.Helpers
                   location.Longitude.Value.ToString(Const.DefaultCoordinateOutputFormat,
                       CultureInfo.InvariantCulture);
         }
+
+        // Latitude = Y
+        // Longitude = X
+        public static bool IsPointInPolygon(DbGeography polygon, DbGeography testPoint)
+        {
+            if (polygon?.PointCount == null)
+            {
+                return false;
+            }
+
+            var result = false;
+            var j = polygon.PointCount.Value;
+            for (var i = 1; i <= polygon.PointCount; i++)
+            {
+                var prevPoint = polygon.PointAt(j);
+                var currPoint = polygon.PointAt(i);
+                
+                if (currPoint.Latitude < testPoint.Latitude && prevPoint.Latitude >= testPoint.Latitude
+                    || prevPoint.Latitude < testPoint.Latitude && currPoint.Latitude >= testPoint.Latitude)
+                {
+                    if (currPoint.Longitude + (testPoint.Latitude - currPoint.Latitude)
+                        / (prevPoint.Latitude - currPoint.Latitude) 
+                        * (prevPoint.Longitude - currPoint.Longitude) < testPoint.Longitude)
+                    {
+                        result = !result;
+                    }
+                }
+                j = i;
+            }
+            return result;
+        }
     }
 }

@@ -7,24 +7,25 @@ namespace Common.Helpers
 {
     public static class RandHelper
     {
-        private static readonly Random random = new Random(DateTime.Now.Second);
+        private static readonly Random Random = new Random(DateTime.Now.Second);
 
         #region Location
 
+        // Think about using NetTopologySuite.Algorithm.Locate.IndexedPointInAreaLocator
+        // for checking if point is in area 
         public static DbGeography LocationInSPb()
         {
             var spb = Const.SaintPetersburg;
             var pointCount = spb.PointCount;
             if (!pointCount.HasValue) return null;
 
-            var inWater = true;
+            var isOutsidePolygon = true;
             DbGeography resultPoint = null;
-            while (inWater)
+            while (isOutsidePolygon)
             {
                 var (firstPoint, secondPoint) = GetTwoRandomPointsFrom(spb, pointCount.Value);
                 resultPoint = GetRandomPointBetween(firstPoint, secondPoint);
-                inWater = resultPoint.Distance(Const.SaintPetersburgBorderLine) <
-                          resultPoint.Distance(Const.SaintPetersburg);
+                isOutsidePolygon = !GeographyHelper.IsPointInPolygon(spb, resultPoint);
             }
 
             return resultPoint;
@@ -36,9 +37,9 @@ namespace Common.Helpers
             DbGeography firstPoint = null, secondPoint = null;
             while (pointsEquals)
             {
-                firstPoint = geography.PointAt(random.Next(pointCount));
-                Thread.Sleep(random.Next(50));
-                secondPoint = geography.PointAt(random.Next(pointCount));
+                firstPoint = geography.PointAt(Random.Next(pointCount));
+                Thread.Sleep(Random.Next(50));
+                secondPoint = geography.PointAt(Random.Next(pointCount));
                 pointsEquals = firstPoint.SpatialEquals(secondPoint);
             }
 
@@ -48,7 +49,7 @@ namespace Common.Helpers
         private static DbGeography GetRandomPointBetween(DbGeography firstPoint, DbGeography secondPoint)
         {
             var diameter = firstPoint.Distance(secondPoint);
-            var randomShift = random.Next(Convert.ToInt32(Math.Truncate(diameter.Value)));
+            var randomShift = Random.Next(Convert.ToInt32(Math.Truncate(diameter.Value)));
 
             var latitudeDiff = Math.Abs(firstPoint.Latitude.Value - secondPoint.Latitude.Value);
             var longitudeDiff = Math.Abs(firstPoint.Longitude.Value - secondPoint.Longitude.Value);
@@ -87,12 +88,12 @@ namespace Common.Helpers
 
         public static (string, string) GetRandomFirstAndLastName()
         {
-            var sex = (Sex) random.Next(2);
+            var sex = (Sex) Random.Next(2);
 
             var first = sex == Sex.Male
-                ? NameList.Boys[random.Next(NameList.Boys.Length)]
-                : NameList.Girls[random.Next(NameList.Girls.Length)];
-            var last = NameList.Last[random.Next(NameList.Last.Length)];
+                ? NameList.Boys[Random.Next(NameList.Boys.Length)]
+                : NameList.Girls[Random.Next(NameList.Girls.Length)];
+            var last = NameList.Last[Random.Next(NameList.Last.Length)];
 
             return (first, last);
         }

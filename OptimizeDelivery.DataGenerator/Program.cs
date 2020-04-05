@@ -1,11 +1,15 @@
-﻿namespace OptimizeDelivery.DataGenerator
+﻿using System;
+using System.Linq;
+using OptimizeDelivery.Services.Services;
+
+namespace OptimizeDelivery.DataGenerator
 {
     internal class Program
     {
         public static void Main(string[] args)
         {
             Sandbox.FillDistrictsTable();
-/*
+
             Sandbox.CreateTestData();
 
             var optimizeDeliveryService = new OptimizeDeliveryService();
@@ -18,9 +22,9 @@
 
             Console.WriteLine("Using depot with Id: " + depot.Id);
 
-            var parcelsForToday = optimizeDeliveryService.GetParcelsForToday();
+            var parcelsForToday = optimizeDeliveryService.GetParcelsForToday().ToArray();
 
-            Console.WriteLine("Loaded parcels for today: " + parcelsForToday.Count());
+            Console.WriteLine("Loaded parcels for today: " + parcelsForToday.Length);
 
             var deliveryClustersBalanced = clusterizationService.ClusterParcelLocationsBalanced(parcelsForToday);
 
@@ -31,7 +35,6 @@
             Console.WriteLine("Created routes, count: " + mapRoutes.Length);
 
             Console.WriteLine("Finished");
-*/
         }
     }
 }
