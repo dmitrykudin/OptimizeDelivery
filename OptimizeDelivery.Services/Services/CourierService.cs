@@ -30,6 +30,14 @@ namespace OptimizeDelivery.Services.Services
             return courierFromDb.ToCourier();
         }
 
+        public Courier[] GetCouriers(int workingDistrictId, DateTime dateTime)
+        {
+            return CourierRepository
+                .GetCouriers(workingDistrictId, dateTime.DayOfWeek)
+                .Select(x => x.ToCourier())
+                .ToArray();
+        }
+
         public CreateCourierResult CreateCourier(CreateCourierRequest request)
         {
             using (var context = new OptimizeDeliveryContext())

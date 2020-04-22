@@ -1,16 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity.Spatial;
 using System.Data.SqlTypes;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using Common.Constants;
 using Common.Models;
+using Itinero;
+using Itinero.Osm.Vehicles;
 using Microsoft.SqlServer.Types;
+using ItineroCoordinate = Itinero.LocalGeo.Coordinate;
+using NTSCoordinate = NetTopologySuite.Geometries.Coordinate;
 
 namespace Common.Helpers
 {
     public static class GeographyHelper
     {
+        private static RouterDb DbRouter { get; set; }
+        
         public static string GetPointString(double latitude, double longitude)
         {
             return "POINT(" + longitude.ToString(CultureInfo.InvariantCulture) +
@@ -23,7 +31,7 @@ namespace Common.Helpers
             return DbGeography.PointFromText(GetPointString(latitude, longitude), Const.DefaultCoordinateSystemId);
         }
 
-        public static string GetMultipolygonString(IEnumerable<Coordinate> coordinates)
+        public static string GetMultipolygonString(IEnumerable<LocalCoordinate> coordinates)
         {
             var coordinatesString = string.Join(",", coordinates.Select(x => x.ToStringForMultipolygon()));
             return $"MULTIPOLYGON((({coordinatesString})))";
@@ -83,6 +91,48 @@ namespace Common.Helpers
                 j = i;
             }
             return result;
+        }
+
+        public static NTSCoordinate ToNtsCoordinate(this DbGeography geography)
+        {
+            return geography?.PointCount == null
+                   || geography.PointCount.Value == 0
+                   || !geography.Longitude.HasValue
+                   || !geography.Latitude.HasValue
+                ? null
+                : new NTSCoordinate(geography.Longitude.Value, geography.Latitude.Value);
+        }
+
+        public static ItineroCoordinate ToItineroCoordinate(this DbGeography geography)
+        {
+            if (geography?.PointCount == null
+                || geography.PointCount.Value == 0
+                || !geography.Longitude.HasValue
+                || !geography.Latitude.HasValue)
+            {
+                throw new ArgumentException("Bad DbGeography object.");
+            }
+
+            return new ItineroCoordinate(Convert.ToSingle(geography.Latitude.Value),
+                Convert.ToSingle(geography.Longitude.Value));
+        }
+
+        public static Router GetCentralDistrictRouter()
+        {
+            RouterDb routerDb;
+            using (var stream = new FileInfo(@"D:/Maps.pbf/RouterDb/spb-central-district.routerdb").OpenRead())
+            {
+                routerDb = RouterDb.Deserialize(stream);
+            }
+
+            routerDb.AddContracted(Vehicle.Car.Fastest());
+
+            return new Router(routerDb);
+        }
+
+        public static DbGeography GetDbGeographyFromFile(string filePath)
+        {
+            return WktToDbGeography(File.ReadAllText(filePath));
         }
     }
 }

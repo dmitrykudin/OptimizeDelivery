@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Common.Helpers;
+using Common.Models.BusinessModels;
 using OptimizeDelivery.Services.Services;
 
 namespace OptimizeDelivery.DataGenerator
@@ -8,9 +11,52 @@ namespace OptimizeDelivery.DataGenerator
     {
         public static void Main(string[] args)
         {
-            Sandbox.FillDistrictsTable();
+            var optimizeDeliveryService = new OptimizeDeliveryService();
+            var clusterizationService = new ClusterizationService();
+            var districtService = new DistrictService();
+            var courierService = new CourierService();
 
-            Sandbox.CreateTestData();
+            Sandbox.CreateTestData(100);
+            var parcelsForToday = optimizeDeliveryService.GetParcelsForToday().ToArray();
+            var districts = districtService.GetAllDistricts();
+            var (parcelsPerDistrict, nonClusteredParcels) = clusterizationService.ClusterParcelsByDistricts(districts, parcelsForToday);
+
+            PrintDistrictsLocations(parcelsPerDistrict);
+            
+            Console.WriteLine("Non-clustered parcels: ");
+
+            foreach (var nonClusteredParcel in nonClusteredParcels)
+            {
+                Console.WriteLine(nonClusteredParcel.Location.ToStringNoWhitespace());
+            }
+
+            /*foreach (var districtWithParcels in parcelsPerDistrict)
+            {
+                
+            }*/
+        }
+
+        private static void FillDistrictsTable()
+        {
+            Sandbox.FillDistrictsTable();
+        }
+
+        private static void PrintDistrictsLocations(Dictionary<District, List<Parcel>> districtsWithParcels)
+        {
+            foreach (var district in districtsWithParcels)
+            {
+                Console.WriteLine("Locations for district: " + district.Key.Name);
+                foreach (var parcel in district.Value)
+                {
+                    Console.WriteLine(parcel.Location.ToStringNoWhitespace());
+                }
+                Console.WriteLine("\n\n");
+            }
+        }
+        
+        private static void OldDeliveryOptimizationTest()
+        {
+            Sandbox.CreateTestData(100);
 
             var optimizeDeliveryService = new OptimizeDeliveryService();
             var clusterizationService = new ClusterizationService();

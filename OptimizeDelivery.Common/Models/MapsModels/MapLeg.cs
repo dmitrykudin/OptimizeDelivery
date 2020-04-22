@@ -10,9 +10,9 @@ namespace Common.Models
 
         public TimeSpan? DurationInTraffic { get; set; }
 
-        public Coordinate StartLocation { get; set; }
+        public LocalCoordinate StartLocation { get; set; }
 
-        public Coordinate EndLocation { get; set; }
+        public LocalCoordinate EndLocation { get; set; }
 
         public string StartAddress { get; set; }
 

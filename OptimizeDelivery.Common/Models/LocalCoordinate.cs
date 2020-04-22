@@ -3,7 +3,7 @@ using Common.Constants;
 
 namespace Common.Models
 {
-    public class Coordinate
+    public class LocalCoordinate
     {
         public double Latitude { get; set; }
 

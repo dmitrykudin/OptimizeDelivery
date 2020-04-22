@@ -41,6 +41,10 @@
       <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Itinero, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Itinero.1.6.0-pre029\lib\netstandard2.0\Itinero.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.SqlServer.Types, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
       <HintPath>..\..\..\..\..\WINDOWS\assembly\GAC_MSIL\Microsoft.SqlServer.Types\11.0.0.0__89845dcd8080cc91\Microsoft.SqlServer.Types.dll</HintPath>
     </Reference>
@@ -53,9 +57,13 @@
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Reminiscence, Version=1.3.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Reminiscence.1.3.0\lib\net45\Reminiscence.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
-      <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
+      <HintPath>..\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -91,7 +99,6 @@
     <Compile Include="DbModels\DbParcel.cs" />
     <Compile Include="DbModels\DbRoute.cs" />
     <Compile Include="DbModels\DbTimetableDay.cs" />
-    <Compile Include="Enums\DayOfWeek.cs" />
     <Compile Include="Helpers\GeographyHelper.cs" />
     <Compile Include="Helpers\RandHelper.cs" />
     <Compile Include="Helpers\RouteHelper.cs" />
@@ -102,7 +109,7 @@
     <Compile Include="Models\ApiModels\RouteStep.cs" />
     <Compile Include="Models\BusinessModels\District.cs" />
     <Compile Include="Models\BusinessModels\TimetableDay.cs" />
-    <Compile Include="Models\Coordinate.cs" />
+    <Compile Include="Models\LocalCoordinate.cs" />
     <Compile Include="Models\BusinessModels\Courier.cs" />
     <Compile Include="Models\BusinessModels\Depot.cs" />
     <Compile Include="Models\BusinessModels\Parcel.cs" />
@@ -117,6 +124,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Enums" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

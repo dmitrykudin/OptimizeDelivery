@@ -1,4 +1,5 @@
-﻿using Common.DbModels;
+﻿using System;
+using Common.DbModels;
 using Common.Models.BusinessModels;
 
 namespace Common.Abstractions.Repositories
@@ -8,5 +9,7 @@ namespace Common.Abstractions.Repositories
         int CreateCourier(Courier courier);
 
         DbCourier GetCourier(int id);
+
+        DbCourier[] GetCouriers(int workingDistrictId, DayOfWeek dayOfWeek);
     }
 }

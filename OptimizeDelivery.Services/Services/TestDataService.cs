@@ -11,14 +11,14 @@ namespace OptimizeDelivery.Services.Services
 {
     public class TestDataService
     {
-        public void SimulateParcelsForToday()
+        public void SimulateParcelsForToday(int amount)
         {
             using (var context = new OptimizeDeliveryContext())
             {
                 var depot = context.Set<DbDepot>().FirstOrDefault();
 
                 var rand = new Random(DateTime.Now.Second);
-                for (var i = 0; i < 100; i++)
+                for (var i = 0; i < amount; i++)
                 {
                     var tenOClock = DateTime.Now.Date.AddHours(10);
                     var dateTimeFrom = tenOClock.AddHours(2 * rand.Next(0, 5));

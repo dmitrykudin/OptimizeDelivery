@@ -14,10 +14,10 @@ namespace OptimizeDelivery.DataGenerator
 {
     public static class Sandbox
     {
-        public static void CreateTestData()
+        public static void CreateTestData(int parcelsAmount)
         {
             var service = new TestDataService();
-            service.SimulateParcelsForToday();
+            service.SimulateParcelsForToday(100);
         }
 
         private static void NormalizePolygon(DbGeography polygon)
@@ -32,11 +32,11 @@ namespace OptimizeDelivery.DataGenerator
             }
 
             var averageDistance = distances.Average();
-            var coordinateList = new List<Coordinate>();
+            var coordinateList = new List<LocalCoordinate>();
             for (var i = 1; i < polygon.PointCount; i++)
             {
                 var currentPoint = polygon.PointAt(i);
-                coordinateList.Add(new Coordinate
+                coordinateList.Add(new LocalCoordinate
                 {
                     Latitude = currentPoint.Latitude.Value,
                     Longitude = currentPoint.Longitude.Value
@@ -50,7 +50,7 @@ namespace OptimizeDelivery.DataGenerator
 
             CreateIntermediatePoints(lastPoint, firstPoint, averageDistance.Value, coordinateList);
 
-            coordinateList.Add(new Coordinate
+            coordinateList.Add(new LocalCoordinate
             {
                 Latitude = firstPoint.Latitude.Value,
                 Longitude = firstPoint.Longitude.Value
@@ -65,7 +65,7 @@ namespace OptimizeDelivery.DataGenerator
 
         private static void CreateIntermediatePoints(DbGeography firstPoint, DbGeography secondPoint,
             double averageDistance,
-            List<Coordinate> coordinateList)
+            List<LocalCoordinate> coordinateList)
         {
             var diameter = firstPoint.Distance(secondPoint);
             var latitudeDiff = Math.Abs(firstPoint.Latitude.Value - secondPoint.Latitude.Value);
@@ -106,7 +106,7 @@ namespace OptimizeDelivery.DataGenerator
                     if (double.IsNaN(latitude)) latitude = firstPoint.Latitude.Value;
 
                     if (double.IsNaN(longitude)) longitude = firstPoint.Longitude.Value;
-                    coordinateList.Add(new Coordinate
+                    coordinateList.Add(new LocalCoordinate
                     {
                         Latitude = latitude,
                         Longitude = longitude

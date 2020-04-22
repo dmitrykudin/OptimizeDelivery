@@ -25,11 +25,11 @@ namespace OptimizeDelivery.MapsAPIIntegration.ConvertHelpers
                 };
         }
 
-        public static Coordinate ToCoordinate(this Location location)
+        public static LocalCoordinate ToCoordinate(this Location location)
         {
             return location == null
                 ? null
-                : new Coordinate
+                : new LocalCoordinate
                 {
                     Latitude = location.Latitude,
                     Longitude = location.Longitude

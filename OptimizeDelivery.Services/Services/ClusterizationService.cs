@@ -3,53 +3,51 @@ using System.Collections.Generic;
 using System.Linq;
 using Accord.MachineLearning;
 using Common.Constants;
+using Common.Helpers;
 using Common.Models.BusinessModels;
 using Common.Models.ServiceModels;
+using NetTopologySuite.Algorithm.Locate;
+using NetTopologySuite.Geometries;
+using NetTopologySuite.IO;
 
 namespace OptimizeDelivery.Services.Services
 {
     public class ClusterizationService
     {
-        public DeliveryCluster[] ClusterParcelLocations(IEnumerable<Parcel> parcels)
+        public (Dictionary<District, List<Parcel>>, Parcel[]) ClusterParcelsByDistricts(IEnumerable<District> districts, IEnumerable<Parcel> parcels)
         {
-            var parcelsArray = parcels.ToArray();
-            var parcelLocations = parcelsArray
-                .Select(x => new[]
+            var availableLocation = new[] {Location.Interior, Location.Boundary};
+            var locators = districts.Select(x => new
                 {
-                    x.Location.Latitude.Value,
-                    x.Location.Longitude.Value
-                })
-                .ToArray();
-            var numberOfClusters =
-                Convert.ToInt32(Math.Ceiling((double) parcelLocations.Length / Const.DefaultParcelsPerDay));
-            var kMeans = new KMeans(numberOfClusters);
-
-            var clusters = kMeans.Learn(parcelLocations);
-            var labels = clusters.Decide(parcelLocations);
-
-            var deliveryLocations = labels
-                .Select((t, i) => new DeliveryLocation
-                {
-                    ClusterNumber = t,
-                    Parcel = parcelsArray[i]
+                    District = x,
+                    AreaLocator = new IndexedPointInAreaLocator(x.Area),
                 })
                 .ToArray();
 
-            var deliveryClusters = new List<DeliveryCluster>();
+            var clusterResult = districts
+                .ToDictionary(
+                    x => x,
+                    x => new List<Parcel>());
 
-            for (var i = 0; i < numberOfClusters; i++)
-                deliveryClusters.Add(new DeliveryCluster
+            var nonClusteredParcels = new List<Parcel>(parcels.Count());
+
+            foreach (var parcel in parcels)
+            {
+                foreach (var locator in locators)
                 {
-                    ClusterNumber = i,
-                    Parcels = deliveryLocations
-                        .Where(x => x.ClusterNumber == i)
-                        .Select(x => x.Parcel)
-                        .ToArray()
-                });
+                    if (availableLocation.Contains(locator.AreaLocator.Locate(parcel.Location.ToNtsCoordinate())))
+                    {
+                        clusterResult[locator.District].Add(parcel);
+                        break;
+                    }
+                }
+                
+                nonClusteredParcels.Add(parcel);
+            }
 
-            return deliveryClusters.ToArray();
+            return (clusterResult, nonClusteredParcels.ToArray());
         }
-
+        
         public DeliveryCluster[] ClusterParcelLocationsBalanced(IEnumerable<Parcel> parcels)
         {
             var parcelsArray = parcels.ToArray();

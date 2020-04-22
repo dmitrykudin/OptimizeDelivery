@@ -1,7 +1,15 @@
 ﻿using System;
 using System.Data.Entity.Spatial;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Threading;
 using Common.Constants;
+using Itinero;
+using Itinero.Osm.Vehicles;
+using NetTopologySuite.Algorithm.Locate;
+using NetTopologySuite.Geometries;
+using NetTopologySuite.IO;
 
 namespace Common.Helpers
 {
@@ -9,37 +17,67 @@ namespace Common.Helpers
     {
         private static readonly Random Random = new Random(DateTime.Now.Second);
 
+        private static readonly Router Router = GeographyHelper.GetCentralDistrictRouter();
+
         #region Location
 
-        // Think about using NetTopologySuite.Algorithm.Locate.IndexedPointInAreaLocator
-        // for checking if point is in area 
         public static DbGeography LocationInSPb()
         {
             var spb = Const.SaintPetersburg;
-            var pointCount = spb.PointCount;
-            if (!pointCount.HasValue) return null;
+            return LocationIn(spb);
+        }
+
+        public static DbGeography LocationInCentralDistrict()
+        {
+            var centralDistrict = GeographyHelper.GetDbGeographyFromFile(@"D:\Maps.pbf\Wkt\Центральный_wkt.txt");
+            return LocationIn(centralDistrict);
+        }
+
+        private static DbGeography LocationIn(DbGeography area)
+        {
+            var allowedLocations = new[] {Location.Boundary, Location.Interior};
+
+            var wktReader = new WKTReader();
+            var geometry = wktReader.Read(area.AsText());
+            var locator = new IndexedPointInAreaLocator(geometry);
 
             var isOutsidePolygon = true;
+            var isNotResolved = true;
             DbGeography resultPoint = null;
-            while (isOutsidePolygon)
+            while (isOutsidePolygon || isNotResolved)
             {
-                var (firstPoint, secondPoint) = GetTwoRandomPointsFrom(spb, pointCount.Value);
+                var (firstPoint, secondPoint) = GetTwoRandomPointsFrom(area);
                 resultPoint = GetRandomPointBetween(firstPoint, secondPoint);
-                isOutsidePolygon = !GeographyHelper.IsPointInPolygon(spb, resultPoint);
+                isOutsidePolygon = allowedLocations.Contains(locator.Locate(resultPoint.ToNtsCoordinate()));
+                isNotResolved = Router.TryResolve(Vehicle.Car.Fastest(), resultPoint.ToItineroCoordinate()).IsError;
             }
 
             return resultPoint;
         }
 
-        private static (DbGeography, DbGeography) GetTwoRandomPointsFrom(DbGeography geography, int pointCount)
+        // Think about using three-point approach
+        private static (DbGeography, DbGeography) GetTwoRandomPointsFrom(DbGeography geography)
         {
+            if (!geography.PointCount.HasValue)
+            {
+                throw new ArgumentException();
+            }
+            var pointCount = geography.PointCount.Value;
             var pointsEquals = true;
             DbGeography firstPoint = null, secondPoint = null;
             while (pointsEquals)
             {
-                firstPoint = geography.PointAt(Random.Next(pointCount));
-                Thread.Sleep(Random.Next(50));
-                secondPoint = geography.PointAt(Random.Next(pointCount));
+                try
+                {
+                    firstPoint = geography.PointAt(Random.Next(pointCount));
+                    Thread.Sleep(Random.Next(50));
+                    secondPoint = geography.PointAt(Random.Next(pointCount));
+                }
+                catch
+                {
+                    continue;
+                }
+                
                 pointsEquals = firstPoint.SpatialEquals(secondPoint);
             }
 
