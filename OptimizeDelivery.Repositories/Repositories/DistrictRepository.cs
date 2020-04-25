@@ -1,20 +1,18 @@
 ﻿using System.Linq;
 using Common.Abstractions.Repositories;
-using Common.ConvertHelpers;
 using Common.DbModels;
-using Common.Models.BusinessModels;
 
 namespace OptimizeDelivery.DataAccessLayer.Repositories
 {
     public class DistrictRepository : IDistrictRepository
     {
-        public int CreateDistrict(District district)
+        public int CreateDistrict(DbDistrict district)
         {
             using (var context = new OptimizeDeliveryContext())
             {
                 var districtFromDb = context
                     .Set<DbDistrict>()
-                    .Add(district.ToDbDistrict());
+                    .Add(district);
 
                 context.SaveChanges();
 
@@ -22,36 +20,32 @@ namespace OptimizeDelivery.DataAccessLayer.Repositories
             }
         }
 
-        public District GetDistrict(int districtId)
+        public DbDistrict GetDistrict(int districtId)
         {
             using (var context = new OptimizeDeliveryContext())
             {
                 return context
                     .Set<DbDistrict>()
-                    .FirstOrDefault(x => x.Id == districtId)
-                    .ToDistrict();
+                    .FirstOrDefault(x => x.Id == districtId);
             }
         }
 
-        public District GetDistrict(string districtName)
+        public DbDistrict GetDistrict(string districtName)
         {
             using (var context = new OptimizeDeliveryContext())
             {
                 return context
                     .Set<DbDistrict>()
-                    .FirstOrDefault(x => x.Name == districtName)
-                    .ToDistrict();
+                    .FirstOrDefault(x => x.Name == districtName);
             }
         }
 
-        public District[] GetAllDistricts()
+        public DbDistrict[] GetAllDistricts()
         {
             using (var context = new OptimizeDeliveryContext())
             {
                 return context
                     .Set<DbDistrict>()
-                    .ToArray()
-                    .Select(x => x.ToDistrict())
                     .ToArray();
             }
         }

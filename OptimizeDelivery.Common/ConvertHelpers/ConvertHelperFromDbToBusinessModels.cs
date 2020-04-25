@@ -17,10 +17,15 @@ namespace Common.ConvertHelpers
                 : new Parcel
                 {
                     Id = dbParcel.Id,
-                    Location = dbParcel.Location,
+                    DepotId = dbParcel.DepotId,
+                    RouteId = dbParcel.RouteId,
+                    DistrictId = dbParcel.DistrictId,
                     RoutePosition = dbParcel.RoutePosition,
-                    DeliveryDateTimeFromUtc = dbParcel.DeliveryDateTimeFromUtc,
-                    DeliveryDateTimeToUtc = dbParcel.DeliveryDateTimeToUtc
+                    OriginalLocation = dbParcel.OriginalLocation,
+                    RoutableLocation = dbParcel.RoutableLocation,
+                    Weight = dbParcel.Weight,
+                    Volume = dbParcel.Volume,
+                    DeliveryTimeWindow = new TimeWindow(dbParcel.DeliveryDateTimeFromUtc, dbParcel.DeliveryDateTimeToUtc),
                 };
         }
 

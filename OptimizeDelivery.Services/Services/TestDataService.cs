@@ -27,7 +27,7 @@ namespace OptimizeDelivery.Services.Services
                     context.Set<DbParcel>().Add(new DbParcel
                     {
                         DepotId = depot.Id,
-                        Location = RandHelper.LocationInSPb(),
+                        OriginalLocation = RandHelper.LocationInSPb(),
                         DeliveryDateTimeFromUtc = dateTimeFrom,
                         DeliveryDateTimeToUtc = dateTimeTo
                     });
@@ -65,7 +65,7 @@ namespace OptimizeDelivery.Services.Services
                     context.Set<DbParcel>().Add(new DbParcel
                     {
                         DepotId = depot.Id,
-                        Location = RandHelper.LocationInSPb(),
+                        OriginalLocation = RandHelper.LocationInSPb(),
                         DeliveryDateTimeFromUtc = DateTime.Now.AddHours(dateTimeFromOffset),
                         DeliveryDateTimeToUtc = DateTime.Now.AddHours(dateTimeToOffset)
                     });

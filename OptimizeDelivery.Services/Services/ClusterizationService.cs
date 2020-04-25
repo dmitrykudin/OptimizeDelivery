@@ -8,19 +8,19 @@ using Common.Models.BusinessModels;
 using Common.Models.ServiceModels;
 using NetTopologySuite.Algorithm.Locate;
 using NetTopologySuite.Geometries;
-using NetTopologySuite.IO;
 
 namespace OptimizeDelivery.Services.Services
 {
     public class ClusterizationService
     {
-        public (Dictionary<District, List<Parcel>>, Parcel[]) ClusterParcelsByDistricts(IEnumerable<District> districts, IEnumerable<Parcel> parcels)
+        public (Dictionary<District, List<Parcel>>, Parcel[]) ClusterParcelsByDistricts(IEnumerable<District> districts,
+            IEnumerable<Parcel> parcels)
         {
             var availableLocation = new[] {Location.Interior, Location.Boundary};
             var locators = districts.Select(x => new
                 {
                     District = x,
-                    AreaLocator = new IndexedPointInAreaLocator(x.Area),
+                    AreaLocator = new IndexedPointInAreaLocator(x.Area)
                 })
                 .ToArray();
 
@@ -34,28 +34,27 @@ namespace OptimizeDelivery.Services.Services
             foreach (var parcel in parcels)
             {
                 foreach (var locator in locators)
-                {
-                    if (availableLocation.Contains(locator.AreaLocator.Locate(parcel.Location.ToNtsCoordinate())))
+                    if (availableLocation.Contains(
+                        locator.AreaLocator.Locate(parcel.OriginalLocation.ToNtsCoordinate())))
                     {
                         clusterResult[locator.District].Add(parcel);
                         break;
                     }
-                }
-                
+
                 nonClusteredParcels.Add(parcel);
             }
 
             return (clusterResult, nonClusteredParcels.ToArray());
         }
-        
+
         public DeliveryCluster[] ClusterParcelLocationsBalanced(IEnumerable<Parcel> parcels)
         {
             var parcelsArray = parcels.ToArray();
             var parcelLocations = parcelsArray
                 .Select(x => new[]
                 {
-                    x.Location.Latitude.Value,
-                    x.Location.Longitude.Value
+                    x.OriginalLocation.Latitude.Value,
+                    x.OriginalLocation.Longitude.Value
                 })
                 .ToArray();
             var numberOfClusters =

@@ -9,14 +9,14 @@ namespace OptimizeDelivery.Services.Services
             int depotId)
         {
             // Create Routing Index Manager
-            RoutingIndexManager manager = new RoutingIndexManager(timeMatrix.GetLength(0), vehicleNumber, depotId);
+            var manager = new RoutingIndexManager(timeMatrix.GetLength(0), vehicleNumber, depotId);
 
             // Create Routing Model.
-            RoutingModel routing = new RoutingModel(manager);
+            var routing = new RoutingModel(manager);
 
             // Create and register a transit callback. Returns weight or arc between two nodes.
-            int transitCallbackIndex = routing.RegisterTransitCallback(
-                (long fromIndex, long toIndex) =>
+            var transitCallbackIndex = routing.RegisterTransitCallback(
+                (fromIndex, toIndex) =>
                 {
                     // Convert from routing variable Index to distance matrix NodeIndex.
                     var fromNode = manager.IndexToNode(fromIndex);
@@ -35,27 +35,28 @@ namespace OptimizeDelivery.Services.Services
                 1200, // vehicle maximum capacities
                 false, // start cumul to zero
                 "Time");
-            RoutingDimension timeDimension = routing.GetMutableDimension("Time");
+            var timeDimension = routing.GetMutableDimension("Time");
             // Add time window constraints for each location except depot.
-            for (int i = 1; i < timeWindows.GetLength(0); ++i)
+            for (var i = 1; i < timeWindows.GetLength(0); ++i)
             {
-                long index = manager.NodeToIndex(i);
+                var index = manager.NodeToIndex(i);
                 timeDimension.CumulVar(index).SetRange(
                     timeWindows[i, 0],
                     timeWindows[i, 1]);
             }
 
             // Add time window constraints for each vehicle start node.
-            for (int i = 0; i < vehicleNumber; ++i)
+            for (var i = 0; i < vehicleNumber; ++i)
             {
-                long index = routing.Start(i);
+                var index = routing.Start(i);
                 timeDimension.CumulVar(index).SetRange(
                     timeWindows[0, 0],
                     timeWindows[0, 1]);
             }
-            
+
             // Instantiate route start and end times to produce feasible times.
-            for (int i = 0; i < vehicleNumber; ++i) {
+            for (var i = 0; i < vehicleNumber; ++i)
+            {
                 routing.AddVariableMinimizedByFinalizer(
                     timeDimension.CumulVar(routing.Start(i)));
                 routing.AddVariableMinimizedByFinalizer(
@@ -63,24 +64,25 @@ namespace OptimizeDelivery.Services.Services
             }
 
             // Setting first solution heuristic.
-            RoutingSearchParameters searchParameters =
+            var searchParameters =
                 operations_research_constraint_solver.DefaultRoutingSearchParameters();
             searchParameters.FirstSolutionStrategy =
                 FirstSolutionStrategy.Types.Value.Automatic;
 
             // Solve the problem.
-            Assignment solution = routing.SolveWithParameters(searchParameters);
+            var solution = routing.SolveWithParameters(searchParameters);
 
             // Print solution on console.
             PrintSolution(vehicleNumber, routing, manager, solution);
         }
-        
-        static void PrintSolution(int vehicleNumber, in RoutingModel routing, in RoutingIndexManager manager, in Assignment solution)
+
+        private static void PrintSolution(int vehicleNumber, in RoutingModel routing, in RoutingIndexManager manager,
+            in Assignment solution)
         {
-            RoutingDimension timeDimension = routing.GetMutableDimension("Time");
+            var timeDimension = routing.GetMutableDimension("Time");
             // Inspect solution.
             long totalTime = 0;
-            for (int i = 0; i < vehicleNumber; ++i)
+            for (var i = 0; i < vehicleNumber; ++i)
             {
                 Console.WriteLine("Route for Vehicle {0}:", i);
                 var index = routing.Start(i);

@@ -1,12 +1,11 @@
 ﻿using System;
 using Common.DbModels;
-using Common.Models.BusinessModels;
 
 namespace Common.Abstractions.Repositories
 {
     public interface ICourierRepository
     {
-        int CreateCourier(Courier courier);
+        int CreateCourier(DbCourier courier);
 
         DbCourier GetCourier(int id);
 

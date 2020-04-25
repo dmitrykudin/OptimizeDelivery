@@ -1,11 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity.Spatial;
 using System.IO;
 using System.Linq;
 using Common.Helpers;
 using Common.Models.BusinessModels;
 using Itinero;
 using Itinero.IO.Osm;
-using Itinero.Osm.Vehicles;
+using Itinero.LocalGeo;
+using Itinero.Profiles;
+using Vehicle = Itinero.Osm.Vehicles.Vehicle;
 
 namespace OptimizeDelivery.Services.Services
 {
@@ -14,6 +17,10 @@ namespace OptimizeDelivery.Services.Services
         private static Router Router { get; set; }
 
         private static RouterDb RouterDb { get; set; }
+
+        public static readonly Profile DefaultProfile = Vehicle.Car.Fastest();
+
+        #region Router
 
         public static void CreateRouterDbFile(string filePath, string savePath)
         {
@@ -52,10 +59,14 @@ namespace OptimizeDelivery.Services.Services
             return Router;
         }
 
+        #endregion
+
+        #region TimeMatrix
+
         public static float[][] GetTimeMatrix(Parcel[] parcels)
         {
             var routerPoints = parcels.Select(x =>
-                GetRouter().Resolve(Vehicle.Car.Fastest(), x.Location.ToItineroCoordinate(), 100F));
+                GetRouter().Resolve(DefaultProfile, x.OriginalLocation.ToItineroCoordinate(), 100F));
             return GetTimeMatrix(routerPoints.ToArray());
         }
 
@@ -63,7 +74,7 @@ namespace OptimizeDelivery.Services.Services
         {
             var router = GetRouter();
             ISet<int> invalidCoordinates = new HashSet<int>();
-            var result = router.CalculateWeight(Vehicle.Car.Fastest(), coordinates, invalidCoordinates);
+            var result = router.CalculateWeight(DefaultProfile, coordinates, invalidCoordinates);
             return result;
         }
 
@@ -71,14 +82,30 @@ namespace OptimizeDelivery.Services.Services
         {
             var router = GetRouter();
             var invalidCoordinates = new HashSet<int>(coordinates.Length);
-            var profile = Vehicle.Car.Fastest();
-            var augmentedWeightHandler = router.GetAugmentedWeightHandler(profile);
+            var augmentedWeightHandler = router.GetAugmentedWeightHandler(DefaultProfile);
 
             var result = router
-                .CalculateWeight(profile, augmentedWeightHandler, coordinates, invalidCoordinates)
+                .CalculateWeight(DefaultProfile, augmentedWeightHandler, coordinates, invalidCoordinates)
                 .Select(x => x.Select(y => y.Time).ToArray())
                 .ToArray();
             return result;
         }
+
+        #endregion
+
+        #region Resolve
+
+        public static Coordinate Resolve(DbGeography originalCoordinate)
+        {
+            return Resolve(originalCoordinate.ToItineroCoordinate());
+        }
+
+        public static Coordinate Resolve(Coordinate originalCoordinate)
+        {
+            var routerPoint = GetRouter().Resolve(DefaultProfile, originalCoordinate);
+            return routerPoint.LocationOnNetwork(GetRouterDb());
+        }
+
+        #endregion
     }
 }

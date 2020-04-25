@@ -6,6 +6,8 @@ namespace Common.Abstractions.Services
     {
         District CreateDistrict(District district);
 
+        District GetDistrict(int districtId);
+
         District[] GetAllDistricts();
     }
 }

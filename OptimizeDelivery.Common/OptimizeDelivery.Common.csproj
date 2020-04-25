@@ -87,8 +87,10 @@
   <ItemGroup>
     <Compile Include="Abstractions\Repositories\ICourierRepository.cs" />
     <Compile Include="Abstractions\Repositories\IDistrictRepository.cs" />
+    <Compile Include="Abstractions\Repositories\IParcelRepository.cs" />
     <Compile Include="Abstractions\Services\ICourierService.cs" />
     <Compile Include="Abstractions\Services\IDistrictService.cs" />
+    <Compile Include="Abstractions\Services\IParcelService.cs" />
     <Compile Include="Constants\Const.cs" />
     <Compile Include="Constants\Const.SaintPetersburg.cs" />
     <Compile Include="ConvertHelpers\ConvertHelperFromBusinessToDbModels.cs" />
@@ -110,6 +112,8 @@
     <Compile Include="Models\ApiModels\RouteStep.cs" />
     <Compile Include="Models\BusinessModels\District.cs" />
     <Compile Include="Models\BusinessModels\TimetableDay.cs" />
+    <Compile Include="Models\BusinessModels\TimeWindow.cs" />
+    <Compile Include="Models\FilterModels\ParcelFilter.cs" />
     <Compile Include="Models\LocalCoordinate.cs" />
     <Compile Include="Models\BusinessModels\Courier.cs" />
     <Compile Include="Models\BusinessModels\Depot.cs" />

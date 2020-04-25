@@ -76,7 +76,7 @@ namespace OptimizeDelivery.DataGenerator
 
             if (diameter > averageDistance)
             {
-                var helperPoint = GeographyHelper.GetPoint(firstPoint.Latitude.Value, secondPoint.Longitude.Value);
+                var helperPoint = GeographyHelper.GetDbGeographyPoint(firstPoint.Latitude.Value, secondPoint.Longitude.Value);
 
                 var a = firstPoint.Distance(helperPoint);
                 var b = secondPoint.Distance(helperPoint);

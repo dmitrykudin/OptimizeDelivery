@@ -24,7 +24,7 @@ namespace OptimizeDelivery.Services.Services
 
         public Courier CreateCourier(Courier courier)
         {
-            var courierFromDbId = CourierRepository.CreateCourier(courier);
+            var courierFromDbId = CourierRepository.CreateCourier(courier.ToDbCourier());
             var courierFromDb = CourierRepository.GetCourier(courierFromDbId);
 
             return courierFromDb.ToCourier();
@@ -37,6 +37,8 @@ namespace OptimizeDelivery.Services.Services
                 .Select(x => x.ToCourier())
                 .ToArray();
         }
+
+        #region OldMethods
 
         public CreateCourierResult CreateCourier(CreateCourierRequest request)
         {
@@ -121,5 +123,7 @@ namespace OptimizeDelivery.Services.Services
                 return routeForToday;
             }
         }
+
+        #endregion
     }
 }

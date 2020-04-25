@@ -44,11 +44,11 @@ namespace Common.Helpers
 
         private static string GetRouteUrl(Parcel[] parcels)
         {
-            var destination = parcels.Last().Location.ToStringNoWhitespace();
+            var destination = parcels.Last().OriginalLocation.ToStringNoWhitespace();
             var waypoints = string.Join("|",
                 parcels
                     .Take(parcels.Length - 1)
-                    .Select(x => x.Location.ToStringNoWhitespace()));
+                    .Select(x => x.OriginalLocation.ToStringNoWhitespace()));
             return string.Join("&",
                 Const.GoogleMapsSharedLinkBaseUrl,
                 "destination=" + destination,

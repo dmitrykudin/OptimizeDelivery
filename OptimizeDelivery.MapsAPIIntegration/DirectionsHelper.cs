@@ -44,7 +44,7 @@ namespace OptimizeDelivery.MapsAPIIntegration
         {
             var depotLocationString = depot.Location.ToStringNoWhitespace();
             var mapRouteLocationStrings = cluster.Parcels
-                .Select(x => x.Location.ToStringNoWhitespace())
+                .Select(x => x.OriginalLocation.ToStringNoWhitespace())
                 .ToArray();
             var directionsResponse = await CreateRoute(depotLocationString, depotLocationString,
                 mapRouteLocationStrings, DateTime.Now.AddDays(1));

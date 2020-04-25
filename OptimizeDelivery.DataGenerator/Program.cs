@@ -27,7 +27,7 @@ namespace OptimizeDelivery.DataGenerator
 
             foreach (var nonClusteredParcel in nonClusteredParcels)
             {
-                Console.WriteLine(nonClusteredParcel.Location.ToStringNoWhitespace());
+                Console.WriteLine(nonClusteredParcel.OriginalLocation.ToStringNoWhitespace());
             }
 
             /*foreach (var districtWithParcels in parcelsPerDistrict)
@@ -48,7 +48,7 @@ namespace OptimizeDelivery.DataGenerator
                 Console.WriteLine("Locations for district: " + district.Key.Name);
                 foreach (var parcel in district.Value)
                 {
-                    Console.WriteLine(parcel.Location.ToStringNoWhitespace());
+                    Console.WriteLine(parcel.OriginalLocation.ToStringNoWhitespace());
                 }
                 Console.WriteLine("\n\n");
             }

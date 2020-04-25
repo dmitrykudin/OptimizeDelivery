@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading;
 using Common.Constants;
 using Itinero;
-using Itinero.Osm.Vehicles;
 using NetTopologySuite.Algorithm.Locate;
 using NetTopologySuite.Geometries;
 using NetTopologySuite.IO;
@@ -16,8 +15,6 @@ namespace Common.Helpers
     public static class RandHelper
     {
         private static readonly Random Random = new Random(DateTime.Now.Millisecond);
-
-        private static readonly Router Router = GeographyHelper.GetCentralDistrictRouter();
 
         #region Location
 
@@ -42,18 +39,17 @@ namespace Common.Helpers
             return routerPoint.LocationOnNetwork(routerDb);
         }
 
-        #region DbGeography approach
+        public static DbGeography GeographyFrom(RouterDb routerDb)
+        {
+            return GeographyHelper.GetDbGeographyPoint(CoordinateFrom(routerDb));
+        }
+
+        #region DbGeography approach (not preferrable)
 
         public static DbGeography LocationInSPb()
         {
             var spb = Const.SaintPetersburg;
             return LocationIn(spb);
-        }
-
-        public static DbGeography LocationInCentralDistrict()
-        {
-            var centralDistrict = GeographyHelper.GetDbGeographyFromFile(@"D:\Maps.pbf\Wkt\Центральный_wkt.txt");
-            return LocationIn(centralDistrict);
         }
 
         private static DbGeography LocationIn(DbGeography area)
@@ -65,14 +61,12 @@ namespace Common.Helpers
             var locator = new IndexedPointInAreaLocator(geometry);
 
             var isOutsidePolygon = true;
-            var isNotResolved = true;
             DbGeography resultPoint = null;
-            while (isOutsidePolygon || isNotResolved)
+            while (isOutsidePolygon)
             {
                 var (firstPoint, secondPoint) = GetTwoRandomPointsFrom(area);
                 resultPoint = GetRandomPointBetween(firstPoint, secondPoint);
                 isOutsidePolygon = allowedLocations.Contains(locator.Locate(resultPoint.ToNtsCoordinate()));
-                isNotResolved = Router.TryResolve(Vehicle.Car.Fastest(), resultPoint.ToItineroCoordinate()).IsError;
             }
 
             return resultPoint;
@@ -115,7 +109,7 @@ namespace Common.Helpers
             var secondToTheTop = secondPoint.Latitude.Value >= firstPoint.Latitude.Value;
             var secondToTheRight = secondPoint.Longitude.Value >= firstPoint.Longitude.Value;
 
-            var helperPoint = GeographyHelper.GetPoint(firstPoint.Latitude.Value, secondPoint.Longitude.Value);
+            var helperPoint = GeographyHelper.GetDbGeographyPoint(firstPoint.Latitude.Value, secondPoint.Longitude.Value);
 
             var a = firstPoint.Distance(helperPoint);
             var b = secondPoint.Distance(helperPoint);
@@ -137,7 +131,7 @@ namespace Common.Helpers
                 ? firstPoint.Longitude.Value + longitudeDeltaInCoordinates
                 : firstPoint.Longitude.Value - longitudeDeltaInCoordinates;
 
-            return GeographyHelper.GetPoint(latitude, longitude);
+            return GeographyHelper.GetDbGeographyPoint(latitude, longitude);
         }
 
         #endregion

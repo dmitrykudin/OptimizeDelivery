@@ -124,6 +124,7 @@
         <Compile Include="Services\DistrictService.cs" />
         <Compile Include="Services\OptimizationService.cs" />
         <Compile Include="Services\OptimizeDeliveryService.cs" />
+        <Compile Include="Services\ParcelService.cs" />
         <Compile Include="Services\RouterService.cs" />
         <Compile Include="Services\TestDataService.cs" />
     </ItemGroup>

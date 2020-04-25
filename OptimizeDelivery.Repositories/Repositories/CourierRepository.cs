@@ -2,20 +2,19 @@
 using System.Data.Entity;
 using System.Linq;
 using Common.Abstractions.Repositories;
-using Common.ConvertHelpers;
-using Common.DbModels;using Common.Models.BusinessModels;
+using Common.DbModels;
 
 namespace OptimizeDelivery.DataAccessLayer.Repositories
 {
     public class CourierRepository : ICourierRepository
     {
-        public int CreateCourier(Courier courier)
+        public int CreateCourier(DbCourier courier)
         {
             using (var context = new OptimizeDeliveryContext())
             {
                 var courierFromDb = context
                     .Set<DbCourier>()
-                    .Add(courier.ToDbCourier());
+                    .Add(courier);
 
                 context.SaveChanges();
 
@@ -41,8 +40,8 @@ namespace OptimizeDelivery.DataAccessLayer.Repositories
                 return context
                     .Set<DbCourier>()
                     .Where(x => x.WorkingDistrictId == workingDistrictId
-                                && x.WorkingDays.FirstOrDefault(y => y.DayOfWeek == (int)dayOfWeek) != null
-                                && !x.WorkingDays.FirstOrDefault(y => y.DayOfWeek == (int)dayOfWeek).IsWeekend)
+                                && x.WorkingDays.FirstOrDefault(y => y.DayOfWeek == (int) dayOfWeek) != null
+                                && !x.WorkingDays.FirstOrDefault(y => y.DayOfWeek == (int) dayOfWeek).IsWeekend)
                     .ToArray();
             }
         }

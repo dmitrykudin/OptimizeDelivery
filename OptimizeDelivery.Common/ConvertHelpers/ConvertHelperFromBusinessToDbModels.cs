@@ -50,5 +50,24 @@ namespace Common.ConvertHelpers
                     Area = GeographyHelper.WktToDbGeography(district.Area.ToText())
                 };
         }
+
+        public static DbParcel ToDbParcel(this Parcel parcel)
+        {
+            return parcel == null
+                ? null
+                : new DbParcel
+                {
+                    DepotId = parcel.DepotId,
+                    RouteId = parcel.RouteId,
+                    DistrictId = parcel.DistrictId,
+                    RoutePosition = parcel.RoutePosition,
+                    OriginalLocation = parcel.OriginalLocation,
+                    RoutableLocation = parcel.RoutableLocation,
+                    Weight = parcel.Weight,
+                    Volume = parcel.Volume,
+                    DeliveryDateTimeFromUtc = parcel.DeliveryTimeWindow.DateTimeFrom,
+                    DeliveryDateTimeToUtc = parcel.DeliveryTimeWindow.DateTimeTo,
+                };
+        }
     }
 }

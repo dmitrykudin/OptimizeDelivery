@@ -1,15 +1,15 @@
-﻿using Common.Models.BusinessModels;
+﻿using Common.DbModels;
 
 namespace Common.Abstractions.Repositories
 {
     public interface IDistrictRepository
     {
-        int CreateDistrict(District district);
+        int CreateDistrict(DbDistrict district);
 
-        District GetDistrict(int districtId);
+        DbDistrict GetDistrict(int districtId);
 
-        District GetDistrict(string districtName);
+        DbDistrict GetDistrict(string districtName);
 
-        District[] GetAllDistricts();
+        DbDistrict[] GetAllDistricts();
     }
 }

@@ -14,9 +14,17 @@ namespace Common.DbModels
 
         public int? RouteId { get; set; }
 
+        public int? DistrictId { get; set; }
+
         public int? RoutePosition { get; set; }
 
-        [Required] public DbGeography Location { get; set; }
+        [Required] public DbGeography OriginalLocation { get; set; }
+        
+        [Required] public DbGeography RoutableLocation { get; set; }
+
+        public double? Weight { get; set; }
+
+        public double? Volume { get; set; }
 
         [Column(TypeName = "datetime2")] public DateTime DeliveryDateTimeFromUtc { get; set; }
 
@@ -25,6 +33,8 @@ namespace Common.DbModels
         public virtual DbDepot Depot { get; set; }
 
         public virtual DbRoute Route { get; set; }
+
+        public virtual DbDistrict District { get; set; }
 
         public void Dispose()
         {
