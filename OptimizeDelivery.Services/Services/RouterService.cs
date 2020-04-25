@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Common.Helpers;
 using Common.Models.BusinessModels;
 using Itinero;
-using Itinero.Algorithms.Weights;
 using Itinero.IO.Osm;
 using Itinero.Osm.Vehicles;
 
@@ -15,7 +12,7 @@ namespace OptimizeDelivery.Services.Services
     public static class RouterService
     {
         private static Router Router { get; set; }
-        
+
         private static RouterDb RouterDb { get; set; }
 
         public static void CreateRouterDbFile(string filePath, string savePath)
@@ -31,7 +28,7 @@ namespace OptimizeDelivery.Services.Services
                 routerDb.Serialize(stream);
             }
         }
-        
+
         public static RouterDb GetRouterDb()
         {
             if (RouterDb == null)
@@ -40,6 +37,7 @@ namespace OptimizeDelivery.Services.Services
                 {
                     RouterDb = RouterDb.Deserialize(stream);
                 }
+
                 RouterDb.AddContracted(Vehicle.Car.Fastest());
                 // RouterDb.AddContracted(Vehicle.Car.Shortest());
             }
@@ -49,17 +47,14 @@ namespace OptimizeDelivery.Services.Services
 
         public static Router GetRouter()
         {
-            if (Router == null)
-            {
-                Router = new Router(GetRouterDb());
-            }
+            if (Router == null) Router = new Router(GetRouterDb());
 
             return Router;
         }
 
         public static float[][] GetTimeMatrix(Parcel[] parcels)
         {
-            var routerPoints = parcels.Select(x => 
+            var routerPoints = parcels.Select(x =>
                 GetRouter().Resolve(Vehicle.Car.Fastest(), x.Location.ToItineroCoordinate(), 100F));
             return GetTimeMatrix(routerPoints.ToArray());
         }
@@ -68,36 +63,22 @@ namespace OptimizeDelivery.Services.Services
         {
             var router = GetRouter();
             ISet<int> invalidCoordinates = new HashSet<int>();
-            var result = router.CalculateWeight(Vehicle.Car.Fastest(), coordinates,  invalidCoordinates);
+            var result = router.CalculateWeight(Vehicle.Car.Fastest(), coordinates, invalidCoordinates);
             return result;
         }
-        
-        public static long[,] GetWeightTimeMatrix(RouterPoint[] coordinates)
+
+        public static float[][] GetWeightTimeMatrix(RouterPoint[] coordinates)
         {
             var router = GetRouter();
-            ISet<int> invalidCoordinates = new HashSet<int>();
-            var result = router.CalculateWeight(
-                Vehicle.Car.Fastest(), 
-                router.GetAugmentedWeightHandler(Vehicle.Car.Fastest()), 
-                coordinates, 
-                invalidCoordinates).ToTimeMatrix();
+            var invalidCoordinates = new HashSet<int>(coordinates.Length);
+            var profile = Vehicle.Car.Fastest();
+            var augmentedWeightHandler = router.GetAugmentedWeightHandler(profile);
+
+            var result = router
+                .CalculateWeight(profile, augmentedWeightHandler, coordinates, invalidCoordinates)
+                .Select(x => x.Select(y => y.Time).ToArray())
+                .ToArray();
             return result;
-        }
-
-        private static long[,] ToTimeMatrix(this Weight[][] weightTimeMatrix)
-        {
-            var height = weightTimeMatrix.Length;
-            var width = weightTimeMatrix[0].Length;
-            var timeMatrix = new long[width, height];
-            for (int i = 0; i < height; i++)
-            {
-                for (int j = 0; j < width; j++)
-                {
-                    timeMatrix[i, j] = Convert.ToInt64(weightTimeMatrix[i][j].Time);
-                }
-            }
-
-            return timeMatrix;
         }
     }
 }

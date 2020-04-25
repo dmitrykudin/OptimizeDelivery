@@ -100,6 +100,7 @@
     <Compile Include="DbModels\DbRoute.cs" />
     <Compile Include="DbModels\DbTimetableDay.cs" />
     <Compile Include="Helpers\GeographyHelper.cs" />
+    <Compile Include="Helpers\MatrixHelper.cs" />
     <Compile Include="Helpers\RandHelper.cs" />
     <Compile Include="Helpers\RouteHelper.cs" />
     <Compile Include="Models\ApiModels\GetRouteRequest.cs" />
@@ -124,9 +125,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Enums" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

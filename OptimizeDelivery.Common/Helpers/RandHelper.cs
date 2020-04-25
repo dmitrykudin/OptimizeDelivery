@@ -1,7 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity.Spatial;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using Common.Constants;
@@ -10,16 +9,40 @@ using Itinero.Osm.Vehicles;
 using NetTopologySuite.Algorithm.Locate;
 using NetTopologySuite.Geometries;
 using NetTopologySuite.IO;
+using Coordinate = Itinero.LocalGeo.Coordinate;
 
 namespace Common.Helpers
 {
     public static class RandHelper
     {
-        private static readonly Random Random = new Random(DateTime.Now.Second);
+        private static readonly Random Random = new Random(DateTime.Now.Millisecond);
 
         private static readonly Router Router = GeographyHelper.GetCentralDistrictRouter();
 
         #region Location
+
+        public static Coordinate[] CoordinateSetFrom(RouterDb routerDb, int amount)
+        {
+            return CoordinateSetFromInner(routerDb, amount).ToArray();
+        }
+
+        private static IEnumerable<Coordinate> CoordinateSetFromInner(RouterDb routerDb, int amount)
+        {
+            for (var i = 0; i < amount; i++) yield return CoordinateFrom(routerDb);
+        }
+
+        public static Coordinate CoordinateFrom(RouterDb routerDb)
+        {
+            var edgeId = Random.Next((int) routerDb.Network.EdgeCount);
+            var vertexId = Random.Next((int) routerDb.Network.VertexCount);
+            var vertex = routerDb.Network.GetVertex((uint) vertexId);
+            var offset = Random.Next(ushort.MaxValue);
+
+            var routerPoint = new RouterPoint(vertex.Latitude, vertex.Longitude, (uint) edgeId, (ushort) offset);
+            return routerPoint.LocationOnNetwork(routerDb);
+        }
+
+        #region DbGeography approach
 
         public static DbGeography LocationInSPb()
         {
@@ -58,10 +81,7 @@ namespace Common.Helpers
         // Think about using three-point approach
         private static (DbGeography, DbGeography) GetTwoRandomPointsFrom(DbGeography geography)
         {
-            if (!geography.PointCount.HasValue)
-            {
-                throw new ArgumentException();
-            }
+            if (!geography.PointCount.HasValue) throw new ArgumentException();
             var pointCount = geography.PointCount.Value;
             var pointsEquals = true;
             DbGeography firstPoint = null, secondPoint = null;
@@ -77,7 +97,7 @@ namespace Common.Helpers
                 {
                     continue;
                 }
-                
+
                 pointsEquals = firstPoint.SpatialEquals(secondPoint);
             }
 
@@ -119,6 +139,8 @@ namespace Common.Helpers
 
             return GeographyHelper.GetPoint(latitude, longitude);
         }
+
+        #endregion
 
         #endregion
 
