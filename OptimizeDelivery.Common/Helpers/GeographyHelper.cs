@@ -16,13 +16,19 @@ namespace Common.Helpers
     {
         public static string GetWktPoint(double latitude, double longitude)
         {
+            return "POINT(" + latitude.ToString(CultureInfo.InvariantCulture) +
+                   " " + longitude.ToString(CultureInfo.InvariantCulture) + ")";
+        }
+        
+        public static string GetWktPointWithInverseOrder(double latitude, double longitude)
+        {
             return "POINT(" + longitude.ToString(CultureInfo.InvariantCulture) +
                    " " + latitude.ToString(CultureInfo.InvariantCulture) + ")";
         }
 
         public static DbGeography GetDbGeographyPoint(double latitude, double longitude)
         {
-            return DbGeography.PointFromText(GetWktPoint(latitude, longitude), Const.DefaultCoordinateSystemId);
+            return DbGeography.PointFromText(GetWktPointWithInverseOrder(latitude, longitude), Const.DefaultCoordinateSystemId);
         }
 
         public static DbGeography GetDbGeographyPoint(ItineroCoordinate coordinate)

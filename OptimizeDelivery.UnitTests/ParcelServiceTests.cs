@@ -20,22 +20,23 @@ namespace OptimizeDelivery.UnitTests
         private IDistrictService DistrictService { get; }
 
         [Test]
-        [Repeat(5)]
+        [Repeat(500)]
         public void CreateParcelTest()
         {
             var testDataService = new TestDataService();
-            var routerDb = RouterService.GetRouterDb();
+            var depot = testDataService.GetLastDepot();
             var rand = new Random();
 
-            var depot = testDataService.GetLastDepot();
             var districts = DistrictService.GetAllDistricts();
+            var randomDistrictId = districts[rand.Next(districts.Length)].Id;
+            var routerDb = RouterService.GetRouterDb(randomDistrictId);
             var hourFrom = rand.Next(8, 22);
             var hourTo = hourFrom + 2;
 
             var parcel = new Parcel
             {
                 DepotId = depot.Id,
-                DistrictId = districts[rand.Next(districts.Length)].Id,
+                DistrictId = randomDistrictId,
                 OriginalLocation = RandHelper.GeographyFrom(routerDb),
                 Weight = rand.Next(100),
                 Volume = rand.Next(100),

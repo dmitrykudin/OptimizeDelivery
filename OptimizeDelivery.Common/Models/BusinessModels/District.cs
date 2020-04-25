@@ -9,5 +9,7 @@ namespace Common.Models.BusinessModels
         public string Name { get; set; }
 
         public Geometry Area { get; set; }
+
+        public string RouterDbFilePath { get; set; }
     }
 }

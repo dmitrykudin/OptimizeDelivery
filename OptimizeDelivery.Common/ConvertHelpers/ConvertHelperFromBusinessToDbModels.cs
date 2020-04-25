@@ -47,7 +47,8 @@ namespace Common.ConvertHelpers
                 : new DbDistrict
                 {
                     Name = district.Name,
-                    Area = GeographyHelper.WktToDbGeography(district.Area.ToText())
+                    Area = GeographyHelper.WktToDbGeography(district.Area.ToText()),
+                    RouterDbFilePath = district.RouterDbFilePath,
                 };
         }
 

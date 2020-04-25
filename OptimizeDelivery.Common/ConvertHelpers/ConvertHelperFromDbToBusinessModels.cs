@@ -85,7 +85,8 @@ namespace Common.ConvertHelpers
                 {
                     Id = dbDistrict.Id,
                     Name = dbDistrict.Name,
-                    Area = wkbReader.Read(dbDistrict.Area.AsBinary())
+                    Area = wkbReader.Read(dbDistrict.Area.AsBinary()),
+                    RouterDbFilePath = dbDistrict.RouterDbFilePath,
                 };
         }
     }

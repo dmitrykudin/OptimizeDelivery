@@ -15,8 +15,10 @@ namespace Common.Constants
         public static string DefaultCoordinateOutputFormat = "0.0000000000";
 
         public static DbGeography DefaultDepotCoordinate =
-            DbGeography.FromText(GeographyHelper.GetWktPoint(59.796169, 30.402962));
+            DbGeography.PointFromText(GeographyHelper.GetWktPointWithInverseOrder(59.796169, 30.402962), DefaultCoordinateSystemId);
 
         public static string GoogleMapsSharedLinkBaseUrl = "https://www.google.com/maps/dir/?api=1&travelmode=driving";
+
+        public static string GlobalRouterDbFilePath = @"D:/Maps.pbf/RouterDb/saint-petersburg-extended.routerdb";
     }
 }

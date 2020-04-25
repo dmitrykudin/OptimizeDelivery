@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Common.Helpers;
 using Common.Models.BusinessModels;
+using Common.Models.FilterModels;
 using OptimizeDelivery.Services.Services;
 
 namespace OptimizeDelivery.DataGenerator
@@ -11,13 +12,13 @@ namespace OptimizeDelivery.DataGenerator
     {
         public static void Main(string[] args)
         {
-            var optimizeDeliveryService = new OptimizeDeliveryService();
+            var parcelService = new ParcelService();
             var clusterizationService = new ClusterizationService();
             var districtService = new DistrictService();
             var courierService = new CourierService();
 
             Sandbox.CreateTestData(100);
-            var parcelsForToday = optimizeDeliveryService.GetParcelsForToday().ToArray();
+            var parcelsForToday = parcelService.GetParcels(new ParcelFilter { DeliveryDate = DateTime.Today });
             var districts = districtService.GetAllDistricts();
             var (parcelsPerDistrict, nonClusteredParcels) = clusterizationService.ClusterParcelsByDistricts(districts, parcelsForToday);
 
@@ -59,6 +60,7 @@ namespace OptimizeDelivery.DataGenerator
             Sandbox.CreateTestData(100);
 
             var optimizeDeliveryService = new OptimizeDeliveryService();
+            var parcelService = new ParcelService();
             var clusterizationService = new ClusterizationService();
             var testDataService = new TestDataService();
 
@@ -68,7 +70,7 @@ namespace OptimizeDelivery.DataGenerator
 
             Console.WriteLine("Using depot with Id: " + depot.Id);
 
-            var parcelsForToday = optimizeDeliveryService.GetParcelsForToday().ToArray();
+            var parcelsForToday = parcelService.GetParcels(new ParcelFilter { DeliveryDate = DateTime.Today });
 
             Console.WriteLine("Loaded parcels for today: " + parcelsForToday.Length);
 

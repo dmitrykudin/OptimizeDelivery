@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Common.ConvertHelpers;
 using Common.DbModels;
 using Common.Models;
 using Common.Models.BusinessModels;
@@ -14,21 +13,7 @@ namespace OptimizeDelivery.Services.Services
 {
     public class OptimizeDeliveryService
     {
-        public IEnumerable<Parcel> GetParcelsForToday()
-        {
-            using (var context = new OptimizeDeliveryContext())
-            {
-                var dateTimeFrom = DateTime.Now.Date.AddHours(10);
-                var dateTimeTo = dateTimeFrom.AddHours(12);
-
-                return context
-                    .Set<DbParcel>()
-                    .Where(x => x.DeliveryDateTimeFromUtc >= dateTimeFrom &&
-                                x.DeliveryDateTimeToUtc <= dateTimeTo)
-                    .ToArray()
-                    .Select(x => x.ToParcel());
-            }
-        }
+        #region Old
 
         public MapRoute[] MakeRoutesForClusters(DeliveryCluster[] clusters, Depot depot)
         {
@@ -81,5 +66,7 @@ namespace OptimizeDelivery.Services.Services
                 }
             }
         }
+
+        #endregion
     }
 }

@@ -13,8 +13,7 @@ namespace OptimizeDelivery.UnitTests
     {
         [Test]
         [Ignore("Generates .routerdb files from .pbf. Run only manually.")]
-        [TestCase(@"D:\Maps.pbf\Pbf\spb-central-district.osm.pbf",
-            @"D:\Maps.pbf\RouterDb\spb-central-district.routerdb")]
+        [TestCase(@"D:\Maps.pbf\Pbf\saint-petersburg-extended.osm.pbf", @"D:\Maps.pbf\RouterDb\saint-petersburg-extended.routerdb")]
         public void CreateRouterDbFileTest(string filePath, string savePath)
         {
             RouterService.CreateRouterDbFile(filePath, savePath);
@@ -24,8 +23,13 @@ namespace OptimizeDelivery.UnitTests
         [TestCase(5)]
         public void GetTimeMatrixTest(int coordinatesAmount)
         {
-            var routerDb = RouterService.GetRouterDb();
-            var router = RouterService.GetRouter();
+            var districtService = new DistrictService();
+            var allDistricts = districtService.GetAllDistricts();
+            var random = new Random();
+            var randomDistrictId = allDistricts[random.Next(allDistricts.Length)].Id;
+
+            var routerDb = RouterService.GetRouterDb(randomDistrictId);
+            var router = RouterService.GetRouter(randomDistrictId);
 
             var coordinates = RandHelper.CoordinateSetFrom(routerDb, coordinatesAmount);
             for (var i = 0; i < coordinatesAmount; i++)

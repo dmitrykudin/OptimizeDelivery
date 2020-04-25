@@ -6,6 +6,6 @@ namespace Common.Models.FilterModels
     {
         public int? DistrictId { get; set; }
 
-        public DateTime DeliveryDate { get; set; }
+        public DateTime? DeliveryDate { get; set; }
     }
 }

@@ -34,7 +34,28 @@ namespace OptimizeDelivery.DataAccessLayer.Repositories
 
         public DbParcel[] GetParcels(ParcelFilter filter)
         {
-            throw new NotImplementedException();
+            using (var context = new OptimizeDeliveryContext())
+            {
+                var getParcelsQuery = context
+                    .Set<DbParcel>()
+                    .AsQueryable();
+
+                if (filter?.DistrictId != null)
+                {
+                    getParcelsQuery = getParcelsQuery
+                        .Where(x => x.DistrictId.HasValue && x.DistrictId == filter.DistrictId);
+                }
+
+                if (filter?.DeliveryDate != null)
+                {
+                    getParcelsQuery = getParcelsQuery
+                        .Where(x => x.DeliveryDateTimeFromUtc >= filter.DeliveryDate 
+                                    && x.DeliveryDateTimeToUtc <= filter.DeliveryDate);
+                }
+
+                return getParcelsQuery
+                    .ToArray();
+            }
         }
     }
 }

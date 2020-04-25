@@ -11,5 +11,7 @@ namespace Common.DbModels
         public string Name { get; set; }
 
         public DbGeography Area { get; set; }
+
+        public string RouterDbFilePath { get; set; }
     }
 }

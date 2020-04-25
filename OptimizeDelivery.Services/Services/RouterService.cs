@@ -2,6 +2,8 @@
 using System.Data.Entity.Spatial;
 using System.IO;
 using System.Linq;
+using Common.Abstractions.Services;
+using Common.Constants;
 using Common.Helpers;
 using Common.Models.BusinessModels;
 using Itinero;
@@ -14,11 +16,17 @@ namespace OptimizeDelivery.Services.Services
 {
     public static class RouterService
     {
-        private static Router Router { get; set; }
-
-        private static RouterDb RouterDb { get; set; }
-
         public static readonly Profile DefaultProfile = Vehicle.Car.Fastest();
+
+        private static Router GlobalRouter { get; set; }
+
+        private static RouterDb GlobalRouterDb { get; set; }
+
+        private static Dictionary<int, RouterDb> RouterDbCache { get; set; }
+        
+        private static Dictionary<int, Router> RouterCache { get; set; }
+        
+        private static IDistrictService DistrictService => new DistrictService();
 
         #region Router
 
@@ -38,25 +46,61 @@ namespace OptimizeDelivery.Services.Services
 
         public static RouterDb GetRouterDb()
         {
-            if (RouterDb == null)
+            if (GlobalRouterDb == null)
             {
-                using (var stream = new FileInfo(@"D:/Maps.pbf/RouterDb/spb-central-district.routerdb").OpenRead())
+                using (var stream = new FileInfo(Const.GlobalRouterDbFilePath).OpenRead())
                 {
-                    RouterDb = RouterDb.Deserialize(stream);
+                    GlobalRouterDb = RouterDb.Deserialize(stream);
                 }
 
-                RouterDb.AddContracted(Vehicle.Car.Fastest());
-                // RouterDb.AddContracted(Vehicle.Car.Shortest());
+                GlobalRouterDb.AddContracted(DefaultProfile);
             }
 
-            return RouterDb;
+            return GlobalRouterDb;
+        }
+
+        public static RouterDb GetRouterDb(int districtId)
+        {
+            RouterDbCache ??= new Dictionary<int, RouterDb>();
+
+            if (RouterDbCache.TryGetValue(districtId, out var existingRouterDb))
+            {
+                return existingRouterDb;
+            }
+
+            var district = DistrictService.GetDistrict(districtId);
+            RouterDb newRouterDb;
+            using (var stream = new FileInfo(district.RouterDbFilePath).OpenRead())
+            {
+                newRouterDb = RouterDb.Deserialize(stream);
+            }
+
+            newRouterDb.AddContracted(DefaultProfile);
+            RouterDbCache.Add(districtId, newRouterDb);
+
+            return newRouterDb;
         }
 
         public static Router GetRouter()
         {
-            if (Router == null) Router = new Router(GetRouterDb());
+            if (GlobalRouter == null) GlobalRouter = new Router(GetRouterDb());
 
-            return Router;
+            return GlobalRouter;
+        }
+
+        public static Router GetRouter(int districtId)
+        {
+            RouterCache ??= new Dictionary<int, Router>();
+
+            if (RouterCache.TryGetValue(districtId, out var existingRouter))
+            {
+                return existingRouter;
+            }
+
+            var router = new Router(GetRouterDb(districtId));
+            RouterCache.Add(districtId, router);
+
+            return router;
         }
 
         #endregion
@@ -95,15 +139,15 @@ namespace OptimizeDelivery.Services.Services
 
         #region Resolve
 
-        public static Coordinate Resolve(DbGeography originalCoordinate)
+        public static Coordinate Resolve(DbGeography originalCoordinate, int districtId)
         {
-            return Resolve(originalCoordinate.ToItineroCoordinate());
+            return Resolve(originalCoordinate.ToItineroCoordinate(), districtId);
         }
 
-        public static Coordinate Resolve(Coordinate originalCoordinate)
+        public static Coordinate Resolve(Coordinate originalCoordinate, int districtId)
         {
-            var routerPoint = GetRouter().Resolve(DefaultProfile, originalCoordinate);
-            return routerPoint.LocationOnNetwork(GetRouterDb());
+            var routerPoint = GetRouter(districtId).Resolve(DefaultProfile, originalCoordinate);
+            return routerPoint.LocationOnNetwork(GetRouterDb(districtId));
         }
 
         #endregion
