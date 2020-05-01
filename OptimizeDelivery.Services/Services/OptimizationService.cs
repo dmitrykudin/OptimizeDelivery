@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Common.Models.ServiceModels;
 using Google.OrTools.ConstraintSolver;
 
 namespace OptimizeDelivery.Services.Services
 {
     public class OptimizationService
     {
-        public void OptimizeRoutesWithTimeMatrix(long[,] timeMatrix, long[,] timeWindows, int vehicleNumber,
+        public OptimizedRoute[] OptimizeRoutesWithTimeMatrix(long[,] timeMatrix, long[,] timeWindows, int vehicleNumber,
             int depotId)
         {
             // Create Routing Index Manager
@@ -74,6 +77,8 @@ namespace OptimizeDelivery.Services.Services
 
             // Print solution on console.
             PrintSolution(vehicleNumber, routing, manager, solution);
+
+            return BuildOptimizedRoutes(vehicleNumber, routing, manager, solution);
         }
 
         private static void PrintSolution(int vehicleNumber, in RoutingModel routing, in RoutingIndexManager manager,
@@ -106,6 +111,43 @@ namespace OptimizeDelivery.Services.Services
             }
 
             Console.WriteLine("Total time of all routes: {0}min", totalTime);
+        }
+
+        private static OptimizedRoute[] BuildOptimizedRoutes(int vehicleNumber, RoutingModel routingModel, RoutingIndexManager manager,
+            Assignment solution)
+        {
+            void AddNode(RoutingDimension dimension, long index, ICollection<RouteDestination> destinations)
+            {
+                var timeVar = dimension.CumulVar(index);
+                destinations.Add(new RouteDestination
+                {
+                    DestinationId = manager.IndexToNode(index),
+                    ArrivalTimeFrom = solution.Min(timeVar),
+                    ArrivalTimeTo = solution.Max(timeVar),
+                });
+            }
+
+            var timeDimension = routingModel.GetMutableDimension("Time");
+            var optimizedRoutes = new OptimizedRoute[vehicleNumber];
+            for (var i = 0; i < vehicleNumber; i++)
+            {
+                var index = routingModel.Start(i);
+                var orderedDestinations = new List<RouteDestination>();
+                while (routingModel.IsEnd(index) == false)
+                {
+                    AddNode(timeDimension, index, orderedDestinations);
+                    index = solution.Value(routingModel.NextVar(index));
+                }
+                
+                AddNode(timeDimension, index, orderedDestinations);
+                optimizedRoutes[i] = new OptimizedRoute
+                {
+                    TotalTime = orderedDestinations.Last().ArrivalTimeFrom,
+                    OrderedDestinations = orderedDestinations.ToArray(),
+                };
+            }
+
+            return optimizedRoutes;
         }
     }
 }

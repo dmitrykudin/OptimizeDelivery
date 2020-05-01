@@ -124,6 +124,8 @@
     <Compile Include="Models\MapsModels\MapRouteDetails.cs" />
     <Compile Include="Models\ServiceModels\DeliveryLocation.cs" />
     <Compile Include="Models\ServiceModels\DeliveryCluster.cs" />
+    <Compile Include="Models\ServiceModels\OptimizedRoute.cs" />
+    <Compile Include="Models\ServiceModels\RouteDestination.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

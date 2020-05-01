@@ -77,7 +77,12 @@ namespace OptimizeDelivery.UnitTests
                 .ToArray());
 
             OutputMatrix(timeMatrix);
-            optimizationService.OptimizeRoutesWithTimeMatrix(timeMatrix.ForOptimization(), timeWindows, 2, 0);
+            var optimizedRoutes = optimizationService.OptimizeRoutesWithTimeMatrix(timeMatrix.ForOptimization(), timeWindows, 2, 0);
+            
+            // TODO
+            // - Add Parcels and Couriers here
+            // - optimizedRoutes -> Route with Parcels order
+            // - Calculate route via Itinero and store it
         }
 
         [Test]

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Common.Helpers;
 using Common.Models.BusinessModels;
 using Common.Models.FilterModels;
@@ -11,6 +13,28 @@ namespace OptimizeDelivery.DataGenerator
     internal class Program
     {
         public static void Main(string[] args)
+        {
+            RunIdealCoordinateGeneration();
+        }
+
+        private static void RunIdealCoordinateGeneration()
+        {
+            var idealCoordinateService = new IdealCoordinateService();
+            using (var source = new CancellationTokenSource())
+            {
+                var token = source.Token;
+                var task = idealCoordinateService.Run(token);
+
+                Console.WriteLine("Press any key to finish the operation...");
+                Console.ReadKey();
+                source.Cancel();
+                task.Wait();
+            }
+
+            Console.WriteLine("Operation finished.");
+        }
+        
+        private static void OptimizeDelivery()
         {
             var parcelService = new ParcelService();
             var clusterizationService = new ClusterizationService();
@@ -36,7 +60,7 @@ namespace OptimizeDelivery.DataGenerator
                 
             }*/
         }
-
+        
         private static void FillDistrictsTable()
         {
             Sandbox.FillDistrictsTable();

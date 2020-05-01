@@ -80,6 +80,17 @@ namespace Common.Helpers
                 Convert.ToSingle(geography.Longitude.Value));
         }
 
+        public static ItineroCoordinate ToItineroCoordinate(this string wktPoint)
+        {
+            var wktParts = wktPoint
+                .Split('(')[1]
+                .Split(')')[0]
+                .Split(' ');
+            return new ItineroCoordinate(
+                Convert.ToSingle(wktParts[0], CultureInfo.InvariantCulture),
+                Convert.ToSingle(wktParts[1], CultureInfo.InvariantCulture));
+        }
+        
         // Latitude = Y
         // Longitude = X
         public static bool IsPointInPolygon(DbGeography polygon, DbGeography testPoint)

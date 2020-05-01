@@ -123,6 +123,7 @@
         <Compile Include="Services\ClusterizationService.cs" />
         <Compile Include="Services\CourierService.cs" />
         <Compile Include="Services\DistrictService.cs" />
+        <Compile Include="Services\IdealCoordinateService.cs" />
         <Compile Include="Services\OptimizationService.cs" />
         <Compile Include="Services\OptimizeDeliveryService.cs" />
         <Compile Include="Services\ParcelService.cs" />
