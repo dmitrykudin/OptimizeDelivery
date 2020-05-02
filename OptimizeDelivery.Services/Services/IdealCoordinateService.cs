@@ -14,7 +14,7 @@ namespace OptimizeDelivery.Services.Services
 {
     public class IdealCoordinateService
     {
-        private readonly string IdealCoordinatesFilePath = "D:/Documents/dotnetprojects/OptimizeDelivery/IdealCoordinates.json";
+        private readonly string IdealCoordinatesFilePath = "C:/Development/Projects/OptimizeDelivery/OptimizeDelivery/IdealCoordinates.json";
 
         private List<Coordinate> CurrentCoordinates { get; set; }
         
