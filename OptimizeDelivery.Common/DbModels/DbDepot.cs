@@ -11,7 +11,17 @@ namespace Common.DbModels
     {
         public int Id { get; set; }
 
-        [Required] public DbGeography Location { get; set; }
+        [Required]
+        public DbGeography OriginalLocation { get; set; }
+
+        [Required]
+        public DbGeography RoutableLocation { get; set; }
+
+        [Column(TypeName = "time")] 
+        public TimeSpan WorkingTimeFromUtc { get; set; }
+
+        [Column(TypeName = "time")] 
+        public TimeSpan WorkingTimeToUtc { get; set; }
 
         public virtual ICollection<DbParcel> Parcels { get; set; }
 

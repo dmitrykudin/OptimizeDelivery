@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 
 namespace Common.Models.BusinessModels
 {
@@ -6,10 +6,12 @@ namespace Common.Models.BusinessModels
     {
         public int Id { get; set; }
 
-        public MapRouteDetails RouteDetails { get; set; }
+        public int? CourierId { get; set; }
 
-        public Courier Courier { get; set; }
+        public string RouteJsonDetails { get; set; }
 
-        public IEnumerable<Parcel> Parcels { get; set; }
+        public DateTime CreationDate { get; set; }
+
+        public int TotalTime { get; set; }
     }
 }

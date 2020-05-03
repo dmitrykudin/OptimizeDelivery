@@ -25,10 +25,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OptimizeDelivery.UnitTests"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OptimizeDelivery.ORToolsSandbox", "OptimizeDelivery.ORToolsSandbox\OptimizeDelivery.ORToolsSandbox.csproj", "{81281C73-26FC-44D0-9741-230CD932367D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Itinero.IO.Osm", "..\..\itinero\routing\src\Itinero.IO.Osm\Itinero.IO.Osm.csproj", "{7891A0CA-4222-4139-8308-A7BF98BD8753}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Itinero", "..\..\itinero\routing\src\Itinero\Itinero.csproj", "{1C85A169-2AF5-4014-80FC-E0AAD60FD2F5}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,14 +68,6 @@ Global
 		{81281C73-26FC-44D0-9741-230CD932367D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81281C73-26FC-44D0-9741-230CD932367D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81281C73-26FC-44D0-9741-230CD932367D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7891A0CA-4222-4139-8308-A7BF98BD8753}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7891A0CA-4222-4139-8308-A7BF98BD8753}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7891A0CA-4222-4139-8308-A7BF98BD8753}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7891A0CA-4222-4139-8308-A7BF98BD8753}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1C85A169-2AF5-4014-80FC-E0AAD60FD2F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1C85A169-2AF5-4014-80FC-E0AAD60FD2F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1C85A169-2AF5-4014-80FC-E0AAD60FD2F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1C85A169-2AF5-4014-80FC-E0AAD60FD2F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

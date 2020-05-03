@@ -18,17 +18,21 @@ namespace Common.DbModels
 
         public int? RoutePosition { get; set; }
 
-        [Required] public DbGeography OriginalLocation { get; set; }
-        
-        [Required] public DbGeography RoutableLocation { get; set; }
+        [Required]
+        public DbGeography OriginalLocation { get; set; }
+
+        [Required]
+        public DbGeography RoutableLocation { get; set; }
 
         public double? Weight { get; set; }
 
         public double? Volume { get; set; }
 
-        [Column(TypeName = "datetime2")] public DateTime DeliveryDateTimeFromUtc { get; set; }
+        [Column(TypeName = "datetime2")]
+        public DateTime DeliveryDateTimeFromUtc { get; set; }
 
-        [Column(TypeName = "datetime2")] public DateTime DeliveryDateTimeToUtc { get; set; }
+        [Column(TypeName = "datetime2")]
+        public DateTime DeliveryDateTimeToUtc { get; set; }
 
         public virtual DbDepot Depot { get; set; }
 

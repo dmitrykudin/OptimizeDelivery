@@ -43,7 +43,7 @@ namespace OptimizeDelivery.Services.Services
                         .Set<DbRoute>()
                         .Add(new DbRoute
                         {
-                            RouteDetails = JsonConvert.SerializeObject(mapRoute.RouteDetails),
+                            RouteJsonDetails = JsonConvert.SerializeObject(mapRoute.RouteDetails),
                             CreationDate = today
                         });
 

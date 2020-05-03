@@ -1,5 +1,6 @@
 ﻿using System;
 using Common.DbModels;
+using Common.Models.FilterModels;
 
 namespace Common.Abstractions.Repositories
 {
@@ -7,8 +8,8 @@ namespace Common.Abstractions.Repositories
     {
         int CreateCourier(DbCourier courier);
 
-        DbCourier GetCourier(int id);
+        DbCourier GetCourier(int courierId);
 
-        DbCourier[] GetCouriers(int workingDistrictId, DayOfWeek dayOfWeek);
+        DbCourier[] GetCouriers(CourierFilter filter);
     }
 }

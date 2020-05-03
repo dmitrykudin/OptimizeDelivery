@@ -1,5 +1,5 @@
-﻿using System;
-using Common.Models.BusinessModels;
+﻿using Common.Models.BusinessModels;
+using Common.Models.FilterModels;
 
 namespace Common.Abstractions.Services
 {
@@ -7,6 +7,6 @@ namespace Common.Abstractions.Services
     {
         Courier CreateCourier(Courier courier);
 
-        Courier[] GetCouriers(int workingDistrictId, DateTime dateTime);
+        Courier[] GetCouriers(CourierFilter filter);
     }
 }

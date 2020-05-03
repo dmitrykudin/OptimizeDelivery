@@ -15,8 +15,10 @@ namespace OptimizeDelivery.Services.Services
     public class IdealCoordinateService
     {
         private readonly string IdealCoordinatesFilePath = "C:/Development/Projects/OptimizeDelivery/OptimizeDelivery/IdealCoordinates.json";
+        
+        private static Random random = new Random();
 
-        private List<Coordinate> CurrentCoordinates { get; set; }
+        public List<Coordinate> CurrentCoordinates { get; set; }
         
         private List<RouterPoint> CurrentRouterPoints { get; set; }
 
@@ -30,21 +32,15 @@ namespace OptimizeDelivery.Services.Services
             await Task.Run(() => RunIdealCoordinateGeneration(cancellationToken));
         }
 
-        public void Try(CancellationToken cancellationToken)
+        public Coordinate GetIdealPoint()
         {
-            while (!cancellationToken.IsCancellationRequested)
-            {
-                Console.WriteLine("Haha");
-                Thread.Sleep(5000);
-            }
-            
-            Console.WriteLine("Cancelled");
+            return CurrentCoordinates.ToArray()[random.Next(CurrentCoordinates.Count)];
         }
         
         private void RunIdealCoordinateGeneration(CancellationToken cancellationToken)
         {
-            var routerDb = RouterService.GetRouterDb();
-            var router = RouterService.GetRouter();
+            var routerDb = ItineroRouter.GetRouterDb();
+            var router = ItineroRouter.GetRouter();
             var notSavedPoints = 0;
             var attemptCount = 0;
             while (!cancellationToken.IsCancellationRequested)
@@ -61,48 +57,7 @@ namespace OptimizeDelivery.Services.Services
                     .Append(randomPoint)
                     .ToArray();
 
-                /*
-                var result = Parallel.ForEach(CurrentRouterPoints, (routerPoint, state) =>
-                {
-                    var testPoints = new[] {routerPoint, randomPoint};
-                    var weightTimeMatrixBetweenTwoPoints = RouterService.GetWeightTimeMatrix(testPoints);
-                    if (weightTimeMatrixBetweenTwoPoints.Any(x => x.Any(y => y == float.MaxValue)))
-                    {
-                        state.Stop();
-                    }
-                });
-
-                if (!result.IsCompleted)
-                {
-                    continue;
-                }
-                */
-                /*
-                var coordinates = CurrentCoordinates
-                    .Append(randomCoordinate)
-                    .ToArray();
-                
-
-                var lastCoordinateIndex = resultPoints.Length - 1;
-                var badPoint = false;
-                for (var i = 0; i < lastCoordinateIndex; i++)
-                {
-                    var testPoints = new[] {resultPoints[i], resultPoints[lastCoordinateIndex]};
-                    var weightTimeMatrixBetweenTwoPoints = RouterService.GetWeightTimeMatrix(testPoints);
-                    if (weightTimeMatrixBetweenTwoPoints.Any(x => x.Any(y => y == float.MaxValue)))
-                    {
-                        badPoint = true;
-                        break;
-                    }
-                }
-
-                if (badPoint)
-                {
-                    continue;
-                }
-                */
-                
-                var weightTimeMatrix = RouterService.GetWeightTimeMatrix(resultPoints);
+                var weightTimeMatrix = ItineroRouter.GetWeightTimeMatrix(resultPoints);
                 if (weightTimeMatrix.Any(x => x.Any(y => y == float.MaxValue)))
                 {
                     continue;
@@ -147,7 +102,7 @@ namespace OptimizeDelivery.Services.Services
 
         private void Deserialize()
         {
-            var router = RouterService.GetRouter();
+            var router = ItineroRouter.GetRouter();
             if (File.Exists(IdealCoordinatesFilePath))
             {
                 var fileText = File.ReadAllText(IdealCoordinatesFilePath);

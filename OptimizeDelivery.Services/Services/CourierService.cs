@@ -8,6 +8,7 @@ using Common.DbModels;
 using Common.Helpers;
 using Common.Models.ApiModels;
 using Common.Models.BusinessModels;
+using Common.Models.FilterModels;
 using OptimizeDelivery.DataAccessLayer;
 using OptimizeDelivery.DataAccessLayer.Repositories;
 
@@ -15,12 +16,12 @@ namespace OptimizeDelivery.Services.Services
 {
     public class CourierService : ICourierService
     {
+        private ICourierRepository CourierRepository { get; }
+
         public CourierService()
         {
             CourierRepository = new CourierRepository();
         }
-
-        private ICourierRepository CourierRepository { get; }
 
         public Courier CreateCourier(Courier courier)
         {
@@ -30,10 +31,10 @@ namespace OptimizeDelivery.Services.Services
             return courierFromDb.ToCourier();
         }
 
-        public Courier[] GetCouriers(int workingDistrictId, DateTime dateTime)
+        public Courier[] GetCouriers(CourierFilter filter)
         {
             return CourierRepository
-                .GetCouriers(workingDistrictId, dateTime.DayOfWeek)
+                .GetCouriers(filter)
                 .Select(x => x.ToCourier())
                 .ToArray();
         }

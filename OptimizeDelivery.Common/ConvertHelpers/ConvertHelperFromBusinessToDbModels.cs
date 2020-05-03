@@ -70,5 +70,31 @@ namespace Common.ConvertHelpers
                     DeliveryDateTimeToUtc = parcel.DeliveryTimeWindow.DateTimeTo,
                 };
         }
+
+        public static DbDepot ToDbDepot(this Depot depot)
+        {
+            return depot == null
+                ? null
+                : new DbDepot
+                {
+                    OriginalLocation = depot.OriginalLocation,
+                    RoutableLocation = depot.RoutableLocation,
+                    WorkingTimeFromUtc = depot.WorkingTimeWindow.TimeFrom,
+                    WorkingTimeToUtc = depot.WorkingTimeWindow.TimeTo,
+                };
+        }
+
+        public static DbRoute ToDbRoute(this Route route)
+        {
+            return route == null
+                ? null
+                : new DbRoute
+                {
+                    CourierId = route.CourierId,
+                    TotalTime = route.TotalTime,
+                    CreationDate = route.CreationDate,
+                    RouteJsonDetails = route.RouteJsonDetails,
+                };
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Common.Models.ServiceModels
 {
-    public class RouteDestination
+    public class RoutePlanDestination
     {
         public int DestinationId { get; set; }
 

@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Data.Entity.Spatial;
+﻿using System.Data.Entity.Spatial;
+using Common.Helpers;
+using Itinero.LocalGeo;
 
 namespace Common.Models.BusinessModels
 {
@@ -7,8 +8,12 @@ namespace Common.Models.BusinessModels
     {
         public int Id { get; set; }
 
-        public DbGeography Location { get; set; }
+        public DbGeography OriginalLocation { get; set; }
 
-        public IEnumerable<Parcel> Parcels { get; set; }
+        public DbGeography RoutableLocation { get; set; }
+
+        public Coordinate RoutableCoordinate => RoutableLocation.ToItineroCoordinate();
+
+        public WorkingWindow WorkingTimeWindow { get; set; }
     }
 }

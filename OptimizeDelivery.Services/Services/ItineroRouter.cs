@@ -14,7 +14,7 @@ using Vehicle = Itinero.Osm.Vehicles.Vehicle;
 
 namespace OptimizeDelivery.Services.Services
 {
-    public static class RouterService
+    public static class ItineroRouter
     {
         public static readonly Profile DefaultProfile = Vehicle.Car.Fastest();
 
@@ -59,16 +59,21 @@ namespace OptimizeDelivery.Services.Services
             return GlobalRouterDb;
         }
 
-        public static RouterDb GetRouterDb(int districtId)
+        public static RouterDb GetRouterDb(int? districtId)
         {
+            if (!districtId.HasValue)
+            {
+                return GetRouterDb();
+            }
+            
             RouterDbCache ??= new Dictionary<int, RouterDb>();
 
-            if (RouterDbCache.TryGetValue(districtId, out var existingRouterDb))
+            if (RouterDbCache.TryGetValue(districtId.Value, out var existingRouterDb))
             {
                 return existingRouterDb;
             }
 
-            var district = DistrictService.GetDistrict(districtId);
+            var district = DistrictService.GetDistrict(districtId.Value);
             RouterDb newRouterDb;
             using (var stream = new FileInfo(district.RouterDbFilePath).OpenRead())
             {
@@ -76,7 +81,7 @@ namespace OptimizeDelivery.Services.Services
             }
 
             newRouterDb.AddContracted(DefaultProfile);
-            RouterDbCache.Add(districtId, newRouterDb);
+            RouterDbCache.Add(districtId.Value, newRouterDb);
 
             return newRouterDb;
         }
@@ -88,17 +93,22 @@ namespace OptimizeDelivery.Services.Services
             return GlobalRouter;
         }
 
-        public static Router GetRouter(int districtId)
+        public static Router GetRouter(int? districtId)
         {
+            if (!districtId.HasValue)
+            {
+                return GetRouter();
+            }
+            
             RouterCache ??= new Dictionary<int, Router>();
 
-            if (RouterCache.TryGetValue(districtId, out var existingRouter))
+            if (RouterCache.TryGetValue(districtId.Value, out var existingRouter))
             {
                 return existingRouter;
             }
 
             var router = new Router(GetRouterDb(districtId));
-            RouterCache.Add(districtId, router);
+            RouterCache.Add(districtId.Value, router);
 
             return router;
         }
@@ -139,12 +149,12 @@ namespace OptimizeDelivery.Services.Services
 
         #region Resolve
 
-        public static Coordinate Resolve(DbGeography originalCoordinate, int districtId)
+        public static Coordinate Resolve(DbGeography originalCoordinate, int? districtId)
         {
             return Resolve(originalCoordinate.ToItineroCoordinate(), districtId);
         }
 
-        public static Coordinate Resolve(Coordinate originalCoordinate, int districtId)
+        public static Coordinate Resolve(Coordinate originalCoordinate, int? districtId)
         {
             var routerPoint = GetRouter(districtId).Resolve(DefaultProfile, originalCoordinate);
             return routerPoint.LocationOnNetwork(GetRouterDb(districtId));

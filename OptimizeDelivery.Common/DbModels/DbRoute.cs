@@ -16,12 +16,14 @@ namespace Common.DbModels
 
         public int? CourierId { get; set; }
 
-        public string RouteDetails { get; set; }
+        public string RouteJsonDetails { get; set; }
 
         public DateTime CreationDate { get; set; }
 
+        public int TotalTime { get; set; }
+
         public virtual DbCourier Courier { get; set; }
 
-        public ICollection<DbParcel> Parcels { get; set; }
+        public virtual ICollection<DbParcel> Parcels { get; set; }
     }
 }

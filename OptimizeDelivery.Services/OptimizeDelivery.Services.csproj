@@ -70,6 +70,14 @@
           <HintPath>..\packages\Google.Protobuf.3.11.2\lib\net45\Google.Protobuf.dll</HintPath>
           <Private>True</Private>
         </Reference>
+        <Reference Include="Itinero, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\packages\Itinero.1.6.0-pre029\lib\netstandard2.0\Itinero.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
+        <Reference Include="Itinero.IO.Osm, Version=1.6.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\packages\Itinero.IO.Osm.1.6.0-pre029\lib\netstandard2.0\Itinero.IO.Osm.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
         <Reference Include="Microsoft.CSharp" />
         <Reference Include="mscorlib" />
         <Reference Include="NetTopologySuite, Version=2.0.0.0, Culture=neutral, PublicKeyToken=f580a05016ebada1">
@@ -122,23 +130,16 @@
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="Services\ClusterizationService.cs" />
         <Compile Include="Services\CourierService.cs" />
+        <Compile Include="Services\DepotService.cs" />
         <Compile Include="Services\DistrictService.cs" />
         <Compile Include="Services\IdealCoordinateService.cs" />
         <Compile Include="Services\OptimizationService.cs" />
         <Compile Include="Services\OptimizeDeliveryService.cs" />
         <Compile Include="Services\ParcelService.cs" />
-        <Compile Include="Services\RouterService.cs" />
-        <Compile Include="Services\TestDataService.cs" />
+        <Compile Include="Services\ItineroRouter.cs" />
+        <Compile Include="Services\RouteService.cs" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\..\..\itinero\routing\src\Itinero.IO.Osm\Itinero.IO.Osm.csproj">
-        <Project>{7891a0ca-4222-4139-8308-a7bf98bd8753}</Project>
-        <Name>Itinero.IO.Osm</Name>
-      </ProjectReference>
-      <ProjectReference Include="..\..\..\itinero\routing\src\Itinero\Itinero.csproj">
-        <Project>{d37db3ce-cea6-4fce-b6d7-983afd8294c6}</Project>
-        <Name>Itinero</Name>
-      </ProjectReference>
       <ProjectReference Include="..\OptimizeDelivery.Common\OptimizeDelivery.Common.csproj">
         <Project>{8e00583c-c6cc-4809-af25-c8c152d6030b}</Project>
         <Name>OptimizeDelivery.Common</Name>

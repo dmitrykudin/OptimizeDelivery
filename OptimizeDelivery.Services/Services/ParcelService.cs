@@ -23,13 +23,21 @@ namespace OptimizeDelivery.Services.Services
             if (parcel.RoutableLocation == null)
             {
                 parcel.RoutableLocation = GeographyHelper
-                    .GetDbGeographyPoint(RouterService.Resolve(parcel.OriginalLocation, parcel.DistrictId.Value));
+                    .GetDbGeographyPoint(ItineroRouter.Resolve(parcel.OriginalLocation, parcel.DistrictId));
             }
             
             var parcelFromDbId = ParcelRepository.CreateParcel(parcel.ToDbParcel());
             var parcelFromDb = ParcelRepository.GetParcel(parcelFromDbId);
 
             return parcelFromDb.ToParcel();
+        }
+
+        public void UpdateParcelsRoute(int routeId, Parcel[] parcels)
+        {
+            ParcelRepository.UpdateParcelsRoute(routeId, parcels
+                .Where(x => x.RoutePosition.HasValue)
+                .Select(x => (x.Id, x.RoutePosition.Value))
+                .ToArray());
         }
 
         public Parcel[] GetParcels(ParcelFilter filter)

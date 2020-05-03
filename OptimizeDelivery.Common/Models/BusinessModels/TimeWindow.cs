@@ -32,5 +32,10 @@ namespace Common.Models.BusinessModels
         public DateTime DateTimeFrom => Date.Add(TimeFrom);
         
         public DateTime DateTimeTo => Date.Add(TimeTo);
+
+        public long[] GetWindow()
+        {
+            return new[] {Convert.ToInt64(TimeFrom.TotalSeconds), Convert.ToInt64(TimeTo.TotalSeconds)};
+        }
     }
 }

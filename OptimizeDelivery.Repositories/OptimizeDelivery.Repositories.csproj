@@ -62,8 +62,10 @@
     <Compile Include="OptimizeDeliveryContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CourierRepository.cs" />
+    <Compile Include="Repositories\DepotRepository.cs" />
     <Compile Include="Repositories\DistrictRepository.cs" />
     <Compile Include="Repositories\ParcelRepository.cs" />
+    <Compile Include="Repositories\RouteRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

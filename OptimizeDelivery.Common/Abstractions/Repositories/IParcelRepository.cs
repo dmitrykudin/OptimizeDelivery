@@ -7,6 +7,8 @@ namespace Common.Abstractions.Repositories
     {
         int CreateParcel(DbParcel parcel);
 
+        void UpdateParcelsRoute(int routeId, (int, int)[] parcelIdWithPosition);
+
         DbParcel GetParcel(int parcelId);
 
         DbParcel[] GetParcels(ParcelFilter filter);

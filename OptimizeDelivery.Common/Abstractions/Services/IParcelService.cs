@@ -7,6 +7,8 @@ namespace Common.Abstractions.Services
     {
         Parcel CreateParcel(Parcel parcel);
 
+        void UpdateParcelsRoute(int routeId, Parcel[] parcels);
+
         Parcel[] GetParcels(ParcelFilter filter);
     }
 }

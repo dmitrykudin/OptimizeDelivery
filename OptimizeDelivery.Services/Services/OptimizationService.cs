@@ -1,14 +1,125 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Common.Abstractions.Services;
+using Common.Helpers;
+using Common.Models.BusinessModels;
+using Common.Models.FilterModels;
 using Common.Models.ServiceModels;
 using Google.OrTools.ConstraintSolver;
+using Itinero;
+using Itinero.Osm.Vehicles;
+using Route = Common.Models.BusinessModels.Route;
+using ItineroRoute = Itinero.Route;
 
 namespace OptimizeDelivery.Services.Services
 {
     public class OptimizationService
     {
-        public OptimizedRoute[] OptimizeRoutesWithTimeMatrix(long[,] timeMatrix, long[,] timeWindows, int vehicleNumber,
+        private IRouteService RouteService { get; set; }
+
+        public IParcelService ParcelService { get; set; }
+
+        public OptimizationService()
+        {
+            RouteService = new RouteService();
+            ParcelService = new ParcelService();
+        }
+        
+        public void BuildOptimalRoutes(bool useDistricts)
+        {
+            var parcelService = new ParcelService();
+            var depotService = new DepotService();
+
+            var parcelsByDepot = parcelService
+                .GetParcels(new ParcelFilter
+                {
+                    DeliveryDate = new FilterValue<DateTime?>(DateTime.Today),
+                    RouteId = new FilterValue<int?>(null),
+                })
+                .GroupBy(x => x.DepotId);
+
+            foreach (var depotParcels in parcelsByDepot)
+            {
+                var depot = depotService.GetDepot(depotParcels.Key);
+                var parcels = depotParcels.ToArray();
+
+                if (useDistricts)
+                {
+                    var parcelsByDistrict = parcels.GroupBy(x => x.DistrictId);
+                    foreach (var districtParcels in parcelsByDistrict)
+                    {
+                        var optimalRoutePlans = GetOptimalRoutePlans(districtParcels.ToArray(), depot);
+                        BuildAndSaveRoutes(depot, parcels, optimalRoutePlans);
+                    }
+                }
+                else
+                {
+                    var optimalRoutePlans = GetOptimalRoutePlans(parcels, depot);
+                    BuildAndSaveRoutes(depot, parcels, optimalRoutePlans);
+                }
+            }
+
+            // TODO
+            // - Add Couriers here
+        }
+
+        private OptimalRoutePlan[] GetOptimalRoutePlans(Parcel[] parcels, Depot depot)
+        {
+            var router = ItineroRouter.GetRouter();
+
+            var coordinates = parcels.Select(x => x.RoutableCoordinate).ToArray();
+            var timeWindows = parcels
+                .Select(x => x.DeliveryTimeWindow.GetWindow())
+                .ToArray();
+
+            var coordinatesWithDepot = new[] {depot.RoutableCoordinate}.Append(coordinates);
+            var timeWindowsWithDepot = new[] {depot.WorkingTimeWindow.GetWindow()}.Append(timeWindows);
+
+            var timeMatrix = ItineroRouter.GetWeightTimeMatrix(coordinatesWithDepot
+                .Select(x => router.Resolve(Vehicle.Car.Fastest(), x, 200F))
+                .ToArray());
+
+            timeMatrix.OutputMatrix();
+            return GetOptimalRoutePlans(timeMatrix.ForOptimization(), timeWindowsWithDepot.CreateRectangularArray(), 10, 0);
+        }
+
+        private void BuildAndSaveRoutes(Depot depot, Parcel[] parcels, OptimalRoutePlan[] routePlans)
+        {
+            var router = ItineroRouter.GetRouter();
+
+            foreach (var routePlan in routePlans)
+            {
+                var destinations = routePlan.OrderedDestinations;
+                var routerPoints = new RouterPoint[destinations.Length];
+                var currentRouteParcels = new Parcel[destinations.Length - 2];
+
+                // Depot is the first and the last point
+                routerPoints[0] = routerPoints[destinations.Length - 1] = router.Resolve(Vehicle.Car.Fastest(), depot.RoutableCoordinate);
+                for (var i = 1; i < destinations.Length - 1; i++)
+                {
+                    var currentParcel = parcels[destinations[i].DestinationId - 1];
+                    currentParcel.RoutePosition = i;
+                    currentRouteParcels[i - 1] = currentParcel;
+                    routerPoints[i] = router.Resolve(Vehicle.Car.Fastest(), currentParcel.RoutableCoordinate);
+                }
+
+                var route = RouteService.CreateRoute(new Route
+                {
+                    TotalTime = Convert.ToInt32(routePlan.TotalTime),
+                    CreationDate = DateTime.Now,
+                    RouteJsonDetails = router
+                        .Calculate(Vehicle.Car.Fastest(), routerPoints)
+                        .ToGeoJson(),
+                });
+                
+                ParcelService.UpdateParcelsRoute(route.Id, currentRouteParcels);
+            }
+        }
+
+        #region OrTools Route Optimization
+
+        private OptimalRoutePlan[] GetOptimalRoutePlans(long[,] timeMatrix, long[,] timeWindows, int vehicleNumber,
             int depotId)
         {
             // Create Routing Index Manager
@@ -34,8 +145,8 @@ namespace OptimizeDelivery.Services.Services
             // Add Distance constraint.
             routing.AddDimension(
                 transitCallbackIndex, // transit callback
-                120, // allow waiting time
-                1200, // vehicle maximum capacities
+                60 * 60, // allow waiting time
+                1440 * 60, // vehicle maximum capacities
                 false, // start cumul to zero
                 "Time");
             var timeDimension = routing.GetMutableDimension("Time");
@@ -106,20 +217,20 @@ namespace OptimizeDelivery.Services.Services
                     manager.IndexToNode(index),
                     solution.Min(endTimeVar),
                     solution.Max(endTimeVar));
-                Console.WriteLine("Time of the route: {0}min", solution.Min(endTimeVar));
+                Console.WriteLine("Time of the route: {0} seconds", solution.Min(endTimeVar));
                 totalTime += solution.Min(endTimeVar);
             }
 
-            Console.WriteLine("Total time of all routes: {0}min", totalTime);
+            Console.WriteLine("Total time of all routes: {0} seconds", totalTime);
         }
 
-        private static OptimizedRoute[] BuildOptimizedRoutes(int vehicleNumber, RoutingModel routingModel, RoutingIndexManager manager,
+        private static OptimalRoutePlan[] BuildOptimizedRoutes(int vehicleNumber, RoutingModel routingModel, RoutingIndexManager manager,
             Assignment solution)
         {
-            void AddNode(RoutingDimension dimension, long index, ICollection<RouteDestination> destinations)
+            void AddNode(RoutingDimension dimension, long index, ICollection<RoutePlanDestination> destinations)
             {
                 var timeVar = dimension.CumulVar(index);
-                destinations.Add(new RouteDestination
+                destinations.Add(new RoutePlanDestination
                 {
                     DestinationId = manager.IndexToNode(index),
                     ArrivalTimeFrom = solution.Min(timeVar),
@@ -128,11 +239,11 @@ namespace OptimizeDelivery.Services.Services
             }
 
             var timeDimension = routingModel.GetMutableDimension("Time");
-            var optimizedRoutes = new OptimizedRoute[vehicleNumber];
+            var optimizedRoutes = new OptimalRoutePlan[vehicleNumber];
             for (var i = 0; i < vehicleNumber; i++)
             {
                 var index = routingModel.Start(i);
-                var orderedDestinations = new List<RouteDestination>();
+                var orderedDestinations = new List<RoutePlanDestination>();
                 while (routingModel.IsEnd(index) == false)
                 {
                     AddNode(timeDimension, index, orderedDestinations);
@@ -140,7 +251,7 @@ namespace OptimizeDelivery.Services.Services
                 }
                 
                 AddNode(timeDimension, index, orderedDestinations);
-                optimizedRoutes[i] = new OptimizedRoute
+                optimizedRoutes[i] = new OptimalRoutePlan
                 {
                     TotalTime = orderedDestinations.Last().ArrivalTimeFrom,
                     OrderedDestinations = orderedDestinations.ToArray(),
@@ -149,5 +260,7 @@ namespace OptimizeDelivery.Services.Services
 
             return optimizedRoutes;
         }
+
+        #endregion
     }
 }

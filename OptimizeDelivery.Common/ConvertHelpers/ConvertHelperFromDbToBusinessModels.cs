@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Linq;
 using Common.DbModels;
-using Common.Models;
 using Common.Models.BusinessModels;
 using NetTopologySuite.IO;
-using Newtonsoft.Json;
 
 namespace Common.ConvertHelpers
 {
@@ -25,7 +23,8 @@ namespace Common.ConvertHelpers
                     RoutableLocation = dbParcel.RoutableLocation,
                     Weight = dbParcel.Weight,
                     Volume = dbParcel.Volume,
-                    DeliveryTimeWindow = new TimeWindow(dbParcel.DeliveryDateTimeFromUtc, dbParcel.DeliveryDateTimeToUtc),
+                    DeliveryTimeWindow =
+                        new TimeWindow(dbParcel.DeliveryDateTimeFromUtc, dbParcel.DeliveryDateTimeToUtc)
                 };
         }
 
@@ -36,7 +35,9 @@ namespace Common.ConvertHelpers
                 : new Depot
                 {
                     Id = dbDepot.Id,
-                    Location = dbDepot.Location
+                    OriginalLocation = dbDepot.OriginalLocation,
+                    RoutableLocation = dbDepot.RoutableLocation,
+                    WorkingTimeWindow = new WorkingWindow(dbDepot.WorkingTimeFromUtc, dbDepot.WorkingTimeToUtc)
                 };
         }
 
@@ -47,10 +48,10 @@ namespace Common.ConvertHelpers
                 : new Route
                 {
                     Id = dbRoute.Id,
-                    Parcels = dbRoute.Parcels.Select(x => x.ToParcel()),
-                    RouteDetails = !string.IsNullOrEmpty(dbRoute.RouteDetails)
-                        ? JsonConvert.DeserializeObject<MapRouteDetails>(dbRoute.RouteDetails)
-                        : null
+                    CourierId = dbRoute.CourierId,
+                    TotalTime = dbRoute.TotalTime,
+                    CreationDate = dbRoute.CreationDate,
+                    RouteJsonDetails = dbRoute.RouteJsonDetails
                 };
         }
 
@@ -86,7 +87,7 @@ namespace Common.ConvertHelpers
                     Id = dbDistrict.Id,
                     Name = dbDistrict.Name,
                     Area = wkbReader.Read(dbDistrict.Area.AsBinary()),
-                    RouterDbFilePath = dbDistrict.RouterDbFilePath,
+                    RouterDbFilePath = dbDistrict.RouterDbFilePath
                 };
         }
     }

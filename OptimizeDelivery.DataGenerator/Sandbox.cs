@@ -14,12 +14,6 @@ namespace OptimizeDelivery.DataGenerator
 {
     public static class Sandbox
     {
-        public static void CreateTestData(int parcelsAmount)
-        {
-            var service = new TestDataService();
-            service.SimulateParcelsForToday(100);
-        }
-
         private static void NormalizePolygon(DbGeography polygon)
         {
             var distances = new List<double?>();

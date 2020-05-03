@@ -1,5 +1,4 @@
-﻿using System;
-using System.Data.Entity.Spatial;
+﻿using System.Data.Entity.Spatial;
 using Common.Helpers;
 using Itinero.LocalGeo;
 

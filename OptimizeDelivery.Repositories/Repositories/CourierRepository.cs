@@ -1,8 +1,8 @@
-﻿using System;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using Common.Abstractions.Repositories;
 using Common.DbModels;
+using Common.Models.FilterModels;
 
 namespace OptimizeDelivery.DataAccessLayer.Repositories
 {
@@ -22,26 +22,38 @@ namespace OptimizeDelivery.DataAccessLayer.Repositories
             }
         }
 
-        public DbCourier GetCourier(int id)
+        public DbCourier GetCourier(int courierId)
         {
             using (var context = new OptimizeDeliveryContext())
             {
                 return context
                     .Set<DbCourier>()
                     .Include(x => x.WorkingDays)
-                    .FirstOrDefault(x => x.Id == id);
+                    .FirstOrDefault(x => x.Id == courierId);
             }
         }
 
-        public DbCourier[] GetCouriers(int workingDistrictId, DayOfWeek dayOfWeek)
+        public DbCourier[] GetCouriers(CourierFilter filter)
         {
             using (var context = new OptimizeDeliveryContext())
             {
-                return context
+                var couriersQuery = context
                     .Set<DbCourier>()
-                    .Where(x => x.WorkingDistrictId == workingDistrictId
-                                && x.WorkingDays.FirstOrDefault(y => y.DayOfWeek == (int) dayOfWeek) != null
-                                && !x.WorkingDays.FirstOrDefault(y => y.DayOfWeek == (int) dayOfWeek).IsWeekend)
+                    .AsQueryable();
+
+                if (filter.WorkingDistrictId.HasValue)
+                    couriersQuery = couriersQuery
+                        .Where(x => x.WorkingDistrictId == filter.WorkingDistrictId.Value);
+
+                if (filter.WorkingDay.HasValue)
+                {
+                    var dayOfWeek = filter.WorkingDay.Value.DayOfWeek;
+                    couriersQuery = couriersQuery
+                        .Where(x => x.WorkingDays.FirstOrDefault(y => y.DayOfWeek == (int) dayOfWeek) != null
+                                    && !x.WorkingDays.FirstOrDefault(y => y.DayOfWeek == (int) dayOfWeek).IsWeekend);
+                }
+
+                return couriersQuery
                     .ToArray();
             }
         }

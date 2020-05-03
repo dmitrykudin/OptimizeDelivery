@@ -9,6 +9,7 @@ namespace OptimizeDelivery.UnitTests
     public class RandomTests
     {
         [Test]
+        [Ignore("Not used.")]
         public void RandomLocationTest()
         {
             for (var i = 0; i < 500; i++)

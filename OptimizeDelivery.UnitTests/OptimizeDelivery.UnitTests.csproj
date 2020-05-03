@@ -50,6 +50,10 @@
           <HintPath>..\packages\Google.Protobuf.3.11.2\lib\net45\Google.Protobuf.dll</HintPath>
           <Private>True</Private>
         </Reference>
+        <Reference Include="Itinero, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\packages\Itinero.1.6.0-pre029\lib\netstandard2.0\Itinero.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
         <Reference Include="mscorlib" />
         <Reference Include="NetTopologySuite, Version=2.0.0.0, Culture=neutral, PublicKeyToken=f580a05016ebada1">
           <HintPath>..\packages\NetTopologySuite.2.0.0\lib\netstandard2.0\NetTopologySuite.dll</HintPath>
@@ -94,10 +98,6 @@
         <Compile Include="RouterServiceTests.cs" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\..\..\itinero\routing\src\Itinero\Itinero.csproj">
-        <Project>{d37db3ce-cea6-4fce-b6d7-983afd8294c6}</Project>
-        <Name>Itinero</Name>
-      </ProjectReference>
       <ProjectReference Include="..\OptimizeDelivery.Common\OptimizeDelivery.Common.csproj">
         <Project>{8e00583c-c6cc-4809-af25-c8c152d6030b}</Project>
         <Name>OptimizeDelivery.Common</Name>
@@ -108,27 +108,30 @@
       </ProjectReference>
     </ItemGroup>
     <ItemGroup>
+      <None Include="..\packages\Google.OrTools.runtime.win-x64.7.5.7466\runtimes\win-x64\native\google-ortools-native.dll">
+        <Link>or-tools\google-ortools-native.dll</Link>
+      </None>
       <None Include="App.config" />
       <None Include="packages.config" />
     </ItemGroup>
     <ItemGroup>
-      <Content Include="bop\bop_parameters.proto" />
-      <Content Include="constraint_solver\assignment.proto" />
-      <Content Include="constraint_solver\demon_profiler.proto" />
-      <Content Include="constraint_solver\routing_enums.proto" />
-      <Content Include="constraint_solver\routing_parameters.proto" />
-      <Content Include="constraint_solver\search_limit.proto" />
-      <Content Include="constraint_solver\solver_parameters.proto" />
-      <Content Include="data\jobshop_scheduling.proto" />
-      <Content Include="data\rcpsp.proto" />
-      <Content Include="glop\parameters.proto" />
-      <Content Include="graph\flow_problem.proto" />
-      <Content Include="linear_solver\linear_solver.proto" />
+      <Content Include="or-tools\bop\bop_parameters.proto" />
+      <Content Include="or-tools\constraint_solver\assignment.proto" />
+      <Content Include="or-tools\constraint_solver\demon_profiler.proto" />
+      <Content Include="or-tools\constraint_solver\routing_enums.proto" />
+      <Content Include="or-tools\constraint_solver\routing_parameters.proto" />
+      <Content Include="or-tools\constraint_solver\search_limit.proto" />
+      <Content Include="or-tools\constraint_solver\solver_parameters.proto" />
+      <Content Include="or-tools\data\jobshop_scheduling.proto" />
+      <Content Include="or-tools\data\rcpsp.proto" />
+      <Content Include="or-tools\glop\parameters.proto" />
+      <Content Include="or-tools\graph\flow_problem.proto" />
+      <Content Include="or-tools\linear_solver\linear_solver.proto" />
+      <Content Include="or-tools\sat\boolean_problem.proto" />
+      <Content Include="or-tools\sat\cp_model.proto" />
+      <Content Include="or-tools\sat\sat_parameters.proto" />
+      <Content Include="or-tools\util\optional_boolean.proto" />
       <Content Include="orLogo.png" />
-      <Content Include="sat\boolean_problem.proto" />
-      <Content Include="sat\cp_model.proto" />
-      <Content Include="sat\sat_parameters.proto" />
-      <Content Include="util\optional_boolean.proto" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
